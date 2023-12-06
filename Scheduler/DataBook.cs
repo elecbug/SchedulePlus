@@ -32,46 +32,28 @@ namespace Scheduler
             {
                 while (true)
                 {
-                    HintTextBox passBox = new HintTextBox();
-                    passBox.Multiline = false;
+                    byte[] enc;
 
-                    AddForm form = new AddForm(new Pair[]
+                    using (BinaryReader reader = new BinaryReader(File.OpenRead(path)))
                     {
-                    new Pair("PASSWORD", passBox),
-                    });
-
-                    if (form.ShowDialog() == DialogResult.Cancel)
-                    {
-                        byte[] pass = SHA256.HashData(Encoding.UTF8.GetBytes(passBox.Text));
-                        byte[] enc;
-
-                        using (BinaryReader reader = new BinaryReader(File.OpenRead(path)))
-                        {
-                            enc = reader.ReadBytes((int)new FileInfo(path).Length);
-                        }
-
-                        Aes aes = Aes.Create();
-                        aes.Key = pass;
-                        aes.BlockSize = 128;
-                        try
-                        {
-                            byte[] dec = aes.DecryptCbc(enc, pass[0..16]);
-                            texts = Encoding.UTF8.GetString(dec).Split("\r\n");
-
-                            break;
-                        }
-                        catch (Exception ex)
-                        {
-                            MessageBox.Show("Invalid password!");
-
-                            Debug.WriteLine(ex);
-                            continue;
-                        }
+                        enc = reader.ReadBytes((int)new FileInfo(path).Length);
                     }
-                    else
-                    {
-                        MessageBox.Show("You can password!");
 
+                    Aes aes = Aes.Create();
+                    aes.Key = this.Pass;
+                    aes.BlockSize = 128;
+                    try
+                    {
+                        byte[] dec = aes.DecryptCbc(enc, this.Pass[0..16]);
+                        texts = Encoding.UTF8.GetString(dec).Split("\r\n");
+
+                        break;
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Invalid password!");
+
+                        Debug.WriteLine(ex);
                         continue;
                     }
                 }

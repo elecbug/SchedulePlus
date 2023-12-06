@@ -34,6 +34,7 @@ namespace Scheduler
 
             data.Save(Environment.CurrentDirectory + "\\test.bmp", true);
             var refresh = new DataBook();
+            refresh.SetPass("lol");
             refresh.Load(Environment.CurrentDirectory + "\\test.bmp", true);
 
         }
