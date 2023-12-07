@@ -53,9 +53,9 @@ namespace Scheduler.Data
                     catch (Exception ex)
                     {
                         MessageBox.Show("Invalid password!");
-
                         Debug.WriteLine(ex);
-                        continue;
+
+                        return;
                     }
                 }
             }
