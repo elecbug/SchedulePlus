@@ -1,10 +1,10 @@
-﻿using Scheduler.CustomControls;
+﻿using Scheduler.CustomControl;
 using System.Diagnostics;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
 
-namespace Scheduler
+namespace Scheduler.Data
 {
     public class DataBook
     {
@@ -14,10 +14,10 @@ namespace Scheduler
 
         public void SetPass(string text)
         {
-            this.Pass = SHA256.HashData(Encoding.UTF8.GetBytes(text));
+            Pass = SHA256.HashData(Encoding.UTF8.GetBytes(text));
         }
 
-        public void Load(string path, bool usedAES) 
+        public void Load(string path, bool usedAES)
         {
             string[] texts;
 
@@ -40,12 +40,12 @@ namespace Scheduler
                     }
 
                     Aes aes = Aes.Create();
-                    aes.Key = this.Pass;
+                    aes.Key = Pass;
                     aes.BlockSize = 128;
 
                     try
                     {
-                        byte[] dec = aes.DecryptCbc(enc, this.Pass[0..16]);
+                        byte[] dec = aes.DecryptCbc(enc, Pass[0..16]);
                         texts = Encoding.UTF8.GetString(dec).Split("\r\n");
 
                         break;
@@ -60,17 +60,17 @@ namespace Scheduler
                 }
             }
 
-            this.Todos = JsonSerializer.Deserialize<List<Todo>>(texts[0]) ?? new List<Todo>();
-            this.Memos = JsonSerializer.Deserialize<List<string>>(texts[1]) ?? new List<string>();
-            this.Pass = JsonSerializer.Deserialize<byte[]>(texts[2]) ?? new byte[0];
+            Todos = JsonSerializer.Deserialize<List<Todo>>(texts[0]) ?? new List<Todo>();
+            Memos = JsonSerializer.Deserialize<List<string>>(texts[1]) ?? new List<string>();
+            Pass = JsonSerializer.Deserialize<byte[]>(texts[2]) ?? new byte[0];
         }
 
         public void Save(string path, bool usedAES)
         {
-            string texts = 
-                JsonSerializer.Serialize(this.Todos) + "\r\n" + 
-                JsonSerializer.Serialize(this.Memos) + "\r\n" + 
-                JsonSerializer.Serialize(this.Pass);
+            string texts =
+                JsonSerializer.Serialize(Todos) + "\r\n" +
+                JsonSerializer.Serialize(Memos) + "\r\n" +
+                JsonSerializer.Serialize(Pass);
 
             if (usedAES == false)
             {
@@ -82,9 +82,9 @@ namespace Scheduler
             else
             {
                 Aes aes = Aes.Create();
-                aes.Key = this.Pass;
+                aes.Key = Pass;
                 aes.BlockSize = 128;
-                byte[] enc = aes.EncryptCbc(Encoding.UTF8.GetBytes(texts), this.Pass[0..16]);
+                byte[] enc = aes.EncryptCbc(Encoding.UTF8.GetBytes(texts), Pass[0..16]);
 
                 using (BinaryWriter writer = new BinaryWriter(File.OpenWrite(path)))
                 {

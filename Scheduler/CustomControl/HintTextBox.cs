@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Scheduler.CustomControls
+namespace Scheduler.CustomControl
 {
     public class HintTextBox : RichTextBox
     {

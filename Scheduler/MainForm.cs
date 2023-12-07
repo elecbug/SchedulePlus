@@ -1,3 +1,4 @@
+using Scheduler.Data;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -9,6 +10,11 @@ namespace Scheduler
         {
             InitializeComponent();
 
+            AddTestData();
+        }
+
+        private void AddTestData()
+        {
             var data = new DataBook();
             data.Todos.Add(new Todo()
             {
@@ -32,11 +38,10 @@ namespace Scheduler
             data.Memos.Add("Mom");
             data.SetPass("lol");
 
-            data.Save(Environment.CurrentDirectory + "\\test.bmp", true);
+            data.Save(Environment.CurrentDirectory + "\\test.sch", true);
             var refresh = new DataBook();
             refresh.SetPass("lol");
-            refresh.Load(Environment.CurrentDirectory + "\\test.bmp", true);
-
+            refresh.Load(Environment.CurrentDirectory + "\\test.sch", true);
         }
     }
 }
