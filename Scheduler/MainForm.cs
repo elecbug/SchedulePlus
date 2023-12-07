@@ -9,11 +9,13 @@ namespace Scheduler
     {
         public string FilePath { get; set; } = "";
         public DataBook DataBook { get; private set; } = new DataBook();
+        private long NowTaskId { get; set; } = Todo.NOT_TASK;
 
         public MainForm()
         {
             InitializeComponent();
             RefreshList();
+            RefreshTreeView();
 
             this.TodoListBox.Format += TodoListBox_Format;
         }
@@ -55,9 +57,16 @@ namespace Scheduler
             refresh.Load(Environment.CurrentDirectory + "\\test.sch", true);
         }
 
-        private void RefreshList()
+        private void RefreshList(bool sorted = false)
         {
+            Todo? selected = (Todo?)this.TodoListBox.SelectedItem;
+
             this.TodoListBox.Items.Clear();
+
+            if (sorted == true)
+            {
+                this.DataBook.Todos.Sort((x, y) => -x.DateTime.CompareTo(y.DateTime));
+            }
 
             foreach (var item in this.DataBook.Todos)
             {
@@ -67,14 +76,34 @@ namespace Scheduler
                     this.TodoListBox.Items.Add(item, true);
             }
         }
+
+        private void RefreshTreeView()
+        {
+            this.MainTreeView.Nodes.Clear();
+
+            foreach (var todo in this.DataBook.Todos)
+            {
+                if ((todo.DateTime.Date <= DateTime.Now.Date
+                    || todo.IsDDayTask == true)
+                    && todo.IsCleared == false)
+                {
+                    this.MainTreeView.Nodes
+                        .Add(todo.DateTime.ToString("yy-MM-dd") + " " + todo.Title);
+                }
+            }
+        }
+
         private void RefreshTodo(Todo? item)
         {
             if (item != null)
             {
+                SaveTodo();
+
                 this.TodoDatePicker.Value = item.DateTime;
                 this.TitleTextBox.Text = item.Title;
                 this.DescryptTextBox.Text = item.Description;
                 this.DDayTaskButton.Checked = item.IsDDayTask;
+                this.NowTaskId = item.TaskId;
             }
             else
             {
@@ -82,39 +111,53 @@ namespace Scheduler
                 this.TitleTextBox.Text = "";
                 this.DescryptTextBox.Text = "";
                 this.DDayTaskButton.Checked = false;
+                this.NowTaskId = Todo.NOT_TASK;
             }
         }
 
         private void NewToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (MessageBox.Show("Close this?", "", MessageBoxButtons.OKCancel) == DialogResult.OK)
+            {
+                this.DataBook = new DataBook();
 
+                RefreshList();
+                RefreshTodo(null);
+
+                this.FilePath = "";
+            }
         }
 
         private void OpenToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            OpenFileDialog dialog = new OpenFileDialog()
+            if (MessageBox.Show("Close this?", "", MessageBoxButtons.OKCancel) == DialogResult.OK)
             {
-                Filter = "Schedule File|*.sch;*.esch",
-            };
-
-            if (dialog.ShowDialog() == DialogResult.OK)
-            {
-                this.FilePath = dialog.FileName;
-
-                if (this.FilePath.Split('.').Last() == "sch")
+                OpenFileDialog dialog = new OpenFileDialog()
                 {
-                    this.DataBook.Load(dialog.FileName, false);
-                }
-                else if (this.FilePath.Split('.').Last() == "esch")
-                {
-                    PasswordForm form = new PasswordForm();
+                    Filter = "Schedule File|*.sch;*.esch",
+                };
 
-                    if (form.ShowDialog() == DialogResult.OK)
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    this.FilePath = dialog.FileName;
+
+                    if (this.FilePath.Split('.').Last() == "sch")
                     {
-                        this.DataBook.SetPass(form.Password.Text);
-                        this.DataBook.Load(dialog.FileName, true);
+                        this.DataBook.Load(dialog.FileName, false);
 
                         RefreshList();
+                    }
+                    else if (this.FilePath.Split('.').Last() == "esch")
+                    {
+                        PasswordForm form = new PasswordForm();
+
+                        if (form.ShowDialog() == DialogResult.OK)
+                        {
+                            this.DataBook.SetPass(form.Password.Text);
+                            this.DataBook.Load(dialog.FileName, true);
+
+                            RefreshList();
+                        }
                     }
                 }
             }
@@ -127,12 +170,122 @@ namespace Scheduler
 
         private void SaveToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (File.Exists(this.FilePath))
+                this.DataBook.Save(this.FilePath, this.DataBook.UsedPass);
+            else
+                SaveAsToolStripMenuItem_Click(sender, e);
 
         }
 
         private void TodoListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
+            this.TodoListBox.Refresh();
             RefreshTodo(this.TodoListBox.SelectedItem as Todo ?? null);
+        }
+
+        private void SaveTodo()
+        {
+            Todo? item = this.DataBook.Todos.Where(x => x.TaskId == this.NowTaskId).FirstOrDefault();
+
+            if (item != null)
+            {
+                this.TodoListBox.Refresh();
+
+                item.DateTime = TodoDatePicker.Value;
+                item.Title = this.TitleTextBox.Text;
+                item.Description = this.DescryptTextBox.Text;
+                item.IsDDayTask = this.DDayTaskButton.Checked;
+
+                if (File.Exists(this.FilePath))
+                    this.DataBook.Save(this.FilePath, this.DataBook.UsedPass);
+            }
+        }
+
+        private void TodoListBox_ItemCheck(object sender, ItemCheckEventArgs e)
+        {
+            Todo? item = (Todo?)this.TodoListBox.SelectedItem;
+
+            if (item != null)
+            {
+                item.IsCleared = e.NewValue == CheckState.Checked;
+            }
+        }
+
+        private void AddButton_Click(object sender, EventArgs e)
+        {
+            SaveTodo();
+
+            long id = new Random().NextInt64();
+
+            this.DataBook.Todos.Add(new Todo
+            {
+                TaskId = id,
+
+            });
+
+            RefreshTodo(this.DataBook.Todos.Last());
+            RefreshList();
+
+            this.TodoListBox.SelectedIndex = this.DataBook.Todos.Count - 1;
+        }
+
+        private void SaveAsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog dialog = new SaveFileDialog()
+            {
+                Filter = "Schedule File|*.sch;*.esch",
+            };
+
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                this.FilePath = dialog.FileName;
+
+                if (this.FilePath.Split('.').Last() == "sch")
+                {
+                    this.DataBook.Save(dialog.FileName, false);
+                }
+                else if (this.FilePath.Split('.').Last() == "esch")
+                {
+                    PasswordForm form = new PasswordForm();
+
+                    if (form.ShowDialog() == DialogResult.OK)
+                    {
+                        this.DataBook.SetPass(form.Password.Text);
+                        this.DataBook.Save(dialog.FileName, true);
+
+                        RefreshList();
+                    }
+                }
+            }
+        }
+
+        private void RemoveButton_Click(object sender, EventArgs e)
+        {
+            Todo? item = (Todo?)this.TodoListBox.SelectedItem;
+
+            if (item != null)
+            {
+                this.DataBook.Todos.Remove(item);
+
+                SaveTodo();
+
+                RefreshList();
+                RefreshTodo(null);
+            }
+        }
+
+        private void SortButton_Click(object sender, EventArgs e)
+        {
+            RefreshList(true);
+            RefreshTodo(null);
+        }
+
+        private void MainTabControl_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (this.MainTabControl.SelectedIndex == 0)
+                RefreshTreeView();
+            else if (this.MainTabControl.SelectedIndex == 1)
+                RefreshList();
         }
     }
 }

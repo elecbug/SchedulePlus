@@ -21,14 +21,16 @@ namespace Scheduler.CustomControl
             this.MinimizeBox = false;
             this.MaximizeBox = false;
             this.ClientSize = new Size(400, 30);
+            this.ShowIcon = false;
 
-            this.Password = new TextBox() 
+            this.Password = new TextBox()
             {
                 Parent = this,
                 Visible = true,
                 PasswordChar = '*',
                 UseSystemPasswordChar = true,
                 Dock = DockStyle.Fill,
+                Margin = new Padding(5, 5, 5, 5),
             };
 
             this.Password.KeyDown += Password_KeyDown;

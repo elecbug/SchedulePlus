@@ -11,6 +11,7 @@ namespace Scheduler.Data
         public List<Todo> Todos { get; private set; } = new List<Todo>();
         public List<string> Memos { get; private set; } = new List<string>();
         public byte[] Pass { get; private set; } = new byte[0];
+        public bool UsedPass { get; private set; } = false;
 
         public void SetPass(string text)
         {
@@ -19,6 +20,8 @@ namespace Scheduler.Data
 
         public void Load(string path, bool usedAES)
         {
+            this.UsedPass = usedAES;
+
             string[] texts;
 
             if (usedAES == false)
@@ -67,6 +70,13 @@ namespace Scheduler.Data
 
         public void Save(string path, bool usedAES)
         {
+            if (File.Exists(path) == false)
+            {
+                File.Create(path).Close();
+            }
+
+            this.UsedPass = usedAES;
+
             string texts =
                 JsonSerializer.Serialize(Todos) + "\r\n" +
                 JsonSerializer.Serialize(Memos) + "\r\n" +
