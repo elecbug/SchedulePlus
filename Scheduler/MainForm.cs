@@ -219,7 +219,7 @@ namespace Scheduler
         {
             SaveFileDialog dialog = new SaveFileDialog()
             {
-                Filter = "Schedule File|*.sch;*.esch",
+                Filter = "Schedule File|*.sch|AES Crypto Schedule File|*.esch",
             };
 
             if (dialog.ShowDialog() == DialogResult.OK)
@@ -299,6 +299,5 @@ namespace Scheduler
         {
             IsSaved = false;
         }
-
     }
 }
