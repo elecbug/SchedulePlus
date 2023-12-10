@@ -12,28 +12,28 @@ namespace Scheduler.CustomControl
 {
     public partial class PasswordForm : Form
     {
-        public TextBox Password { get; private set; }
+        public TextBox PasswordBox { get; private set; }
 
-        public PasswordForm()
+        public PasswordForm(string text)
         {
             this.StartPosition = FormStartPosition.CenterScreen;
-            this.Text = "Password";
+            this.Text = text;
             this.MinimizeBox = false;
             this.MaximizeBox = false;
             this.ClientSize = new Size(400, 30);
             this.ShowIcon = false;
 
-            this.Password = new TextBox()
+            this.PasswordBox = new TextBox()
             {
                 Parent = this,
                 Visible = true,
                 PasswordChar = '*',
                 UseSystemPasswordChar = true,
-                Dock = DockStyle.Fill,
-                Margin = new Padding(5, 5, 5, 5),
+                Location = new Point(5, 5),
+                Size = new Size(this.ClientSize.Width - 10, this.ClientSize.Height - 10),
             };
 
-            this.Password.KeyDown += Password_KeyDown;
+            this.PasswordBox.KeyDown += Password_KeyDown;
         }
 
         private void Password_KeyDown(object? sender, KeyEventArgs e)

@@ -11,7 +11,7 @@ namespace Scheduler.Data
         public List<Todo> Todos { get; private set; } = new List<Todo>();
         public List<string> Memos { get; private set; } = new List<string>();
         public byte[] Pass { get; private set; } = new byte[0];
-        public bool UsedPass { get; private set; } = false;
+        public bool UsedPass { get; set; } = false;
 
         public void SetPass(string text)
         {
@@ -101,6 +101,11 @@ namespace Scheduler.Data
                     writer.Write(enc);
                 }
             }
+        }
+
+        public bool ComparePass(string text)
+        {
+            return Pass.Equals(SHA256.HashData(Encoding.UTF8.GetBytes(text)));
         }
     }
 }
