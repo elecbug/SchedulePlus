@@ -2,22 +2,60 @@ using Scheduler.CustomControl;
 using Scheduler.Data;
 using System.Security.Cryptography;
 using System.Text;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 
 namespace Scheduler
 {
     public partial class MainForm : Form
     {
+        /// <summary>
+        /// 현재 파일의 경로
+        /// </summary>
         public string FilePath { get; set; } = "";
+        /// <summary>
+        /// 현재 열려있는 데이터 북
+        /// </summary>
         public DataBook DataBook { get; private set; } = new DataBook();
+        /// <summary>
+        /// 현재 선택된 테스크의 ID, Detail View에서 표시되는 테스크의 ID임
+        /// </summary>
         private long NowTaskId { get; set; } = Todo.NOT_TASK;
+        /// <summary>
+        /// 현재 데이터가 저장된 이후 수정이 더 가해지지 않은 상태인 지의 여부
+        /// </summary>
         private bool IsSaved { get; set; } = true;
 
         private const string EnterNewPass = "Enter the new password";
         private const string EnterBeforePass = "Enter the current password";
 
-        public MainForm()
+        public MainForm(string path)
         {
             InitializeComponent();
+            
+            if (path != "") 
+            {
+                this.FilePath = path;
+
+                if (this.FilePath.Split('.').Last() == "sch")
+                {
+                    this.DataBook.Load(path, false);
+                }
+                else if (this.FilePath.Split('.').Last() == "esch")
+                {
+                    PasswordForm form = new PasswordForm(EnterBeforePass);
+
+                    if (form.ShowDialog() == DialogResult.OK)
+                    {
+                        this.DataBook.SetPass(form.PasswordBox.Text);
+
+                        if (this.DataBook.Load(path, true) == false)
+                        {
+                            this.Close();
+                        }
+                    }
+                }
+            }
+
             RefreshList();
             RefreshTreeView();
         }
@@ -51,6 +89,14 @@ namespace Scheduler
             var refresh = new DataBook();
             refresh.SetPass("lol");
             refresh.Load(Environment.CurrentDirectory + "\\test.sch", true);
+        }
+
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (MessageBox.Show("Close the Window?", "", MessageBoxButtons.OKCancel) == DialogResult.Cancel)
+            {
+                e.Cancel = true;
+            }
         }
 
         private void TodoListBox_Format(object? sender, ListControlConvertEventArgs e)
@@ -112,7 +158,8 @@ namespace Scheduler
                     && todo.IsCleared == false)
                 {
                     this.MainTreeView.Nodes
-                        .Add(todo.DateTime.ToString("yy-MM-dd") + " " + todo.Title);
+                        .Add(todo.DateTime.ToString("yy-MM-dd") + " " + todo.Title
+                            + (todo.IsDDayTask == true ? " (D-" + ((todo.DateTime - DateTime.Now).Days + 1) + ")" : ""));
                 }
             }
         }
@@ -169,36 +216,33 @@ namespace Scheduler
         }
         private void OpenToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Close this?", "", MessageBoxButtons.OKCancel) == DialogResult.OK)
+            OpenFileDialog dialog = new OpenFileDialog()
             {
-                OpenFileDialog dialog = new OpenFileDialog()
-                {
-                    Filter = "Schedule File|*.sch;*.esch",
-                };
+                Filter = "Schedule File|*.sch;*.esch",
+            };
 
-                if (dialog.ShowDialog() == DialogResult.OK)
-                {
-                    this.FilePath = dialog.FileName;
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                this.FilePath = dialog.FileName;
 
-                    if (this.FilePath.Split('.').Last() == "sch")
+                if (this.FilePath.Split('.').Last() == "sch")
+                {
+                    this.DataBook.Load(dialog.FileName, false);
+
+                    RefreshList();
+                    RefreshTreeView();
+                }
+                else if (this.FilePath.Split('.').Last() == "esch")
+                {
+                    PasswordForm form = new PasswordForm(EnterBeforePass);
+
+                    if (form.ShowDialog() == DialogResult.OK)
                     {
-                        this.DataBook.Load(dialog.FileName, false);
+                        this.DataBook.SetPass(form.PasswordBox.Text);
+                        this.DataBook.Load(dialog.FileName, true);
 
                         RefreshList();
                         RefreshTreeView();
-                    }
-                    else if (this.FilePath.Split('.').Last() == "esch")
-                    {
-                        PasswordForm form = new PasswordForm(EnterBeforePass);
-
-                        if (form.ShowDialog() == DialogResult.OK)
-                        {
-                            this.DataBook.SetPass(form.PasswordBox.Text);
-                            this.DataBook.Load(dialog.FileName, true);
-
-                            RefreshList();
-                            RefreshTreeView();
-                        }
                     }
                 }
             }
@@ -210,10 +254,13 @@ namespace Scheduler
         private void SaveToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (File.Exists(this.FilePath))
+            {
                 this.DataBook.Save(this.FilePath, this.DataBook.UsedPass);
+            }
             else
+            {
                 SaveAsToolStripMenuItem_Click(sender, e);
-
+            }
         }
         private void SaveAsToolStripMenuItem_Click(object sender, EventArgs e)
         {

@@ -10,10 +10,20 @@ using System.Windows.Forms;
 
 namespace Scheduler.CustomControl
 {
+    /// <summary>
+    /// 비밀번호를 입력받는 폼
+    /// </summary>
     public partial class PasswordForm : Form
     {
+        /// <summary>
+        /// 비밀번호 텍스트 박스
+        /// </summary>
         public TextBox PasswordBox { get; private set; }
 
+        /// <summary>
+        /// 비밀번호 폼 생성
+        /// </summary>
+        /// <param name="text"> 폼 상단 텍스트 </param>
         public PasswordForm(string text)
         {
             this.StartPosition = FormStartPosition.CenterScreen;
@@ -36,6 +46,11 @@ namespace Scheduler.CustomControl
             this.PasswordBox.KeyDown += Password_KeyDown;
         }
 
+        /// <summary>
+        /// 엔터 키를 입력 시 DialogResult.OK를 반환하고 폼 종료
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Password_KeyDown(object? sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
