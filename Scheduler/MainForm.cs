@@ -31,8 +31,11 @@ namespace Scheduler
         public MainForm(string path)
         {
             InitializeComponent();
-            
-            if (path != "") 
+
+            this.TitleTextBox.LanguageOption = RichTextBoxLanguageOptions.AutoFont;
+            this.DescryptTextBox.LanguageOption = RichTextBoxLanguageOptions.AutoFont;
+
+            if (path != "")
             {
                 this.FilePath = path;
 
@@ -108,7 +111,7 @@ namespace Scheduler
         {
             this.TodoListBox.Refresh();
 
-            if (IsSaved == false 
+            if (IsSaved == false
                 && MessageBox.Show("Do you want to save editing now?", "", MessageBoxButtons.OKCancel) == DialogResult.OK)
             {
                 SaveTodo();
@@ -247,21 +250,6 @@ namespace Scheduler
                 }
             }
         }
-        private void CloseToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
-        private void SaveToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (File.Exists(this.FilePath))
-            {
-                this.DataBook.Save(this.FilePath, this.DataBook.UsedPass);
-            }
-            else
-            {
-                SaveAsToolStripMenuItem_Click(sender, e);
-            }
-        }
         private void SaveAsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SaveFileDialog dialog = new SaveFileDialog()
@@ -333,7 +321,7 @@ namespace Scheduler
         }
         private void CancelButton_Click(object sender, EventArgs e)
         {
-            if (IsSaved == false 
+            if (IsSaved == false
                 && MessageBox.Show("Do you want to cancel editing?", "", MessageBoxButtons.OKCancel) == DialogResult.OK)
             {
                 RefreshTodo(null);
