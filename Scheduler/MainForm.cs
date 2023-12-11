@@ -330,7 +330,7 @@ namespace Scheduler
         {
             long id = new Random().NextInt64();
 
-            DataBook.Todos.Add(new Todo
+            DataBook.Todos.Add(new Todo()
             {
                 TaskId = id,
             });
