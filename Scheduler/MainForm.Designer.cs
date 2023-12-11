@@ -48,11 +48,12 @@
             NewToolStripMenuItem = new ToolStripMenuItem();
             OpenToolStripMenuItem = new ToolStripMenuItem();
             SaveAsToolStripMenuItem = new ToolStripMenuItem();
-            SettingToolStripMenuItem = new ToolStripMenuItem();
+            ExportToolStripMenuItem = new ToolStripMenuItem();
             MainTabControl = new TabControl();
             TabPage1 = new TabPage();
             MainTreeView = new TreeView();
             TabPage2 = new TabPage();
+            ExportAESFileToolStripMenuItem = new ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)MainSplitContainer).BeginInit();
             MainSplitContainer.Panel1.SuspendLayout();
             MainSplitContainer.Panel2.SuspendLayout();
@@ -278,7 +279,7 @@
             // DefaultMenuStrip
             // 
             DefaultMenuStrip.ImageScalingSize = new Size(20, 20);
-            DefaultMenuStrip.Items.AddRange(new ToolStripItem[] { FileToolStripMenuItem, SettingToolStripMenuItem });
+            DefaultMenuStrip.Items.AddRange(new ToolStripItem[] { FileToolStripMenuItem, ExportToolStripMenuItem });
             DefaultMenuStrip.Location = new Point(0, 0);
             DefaultMenuStrip.Name = "DefaultMenuStrip";
             DefaultMenuStrip.Padding = new Padding(5, 2, 0, 2);
@@ -296,29 +297,30 @@
             // NewToolStripMenuItem
             // 
             NewToolStripMenuItem.Name = "NewToolStripMenuItem";
-            NewToolStripMenuItem.Size = new Size(114, 22);
+            NewToolStripMenuItem.Size = new Size(180, 22);
             NewToolStripMenuItem.Text = "New";
             NewToolStripMenuItem.Click += NewToolStripMenuItem_Click;
             // 
             // OpenToolStripMenuItem
             // 
             OpenToolStripMenuItem.Name = "OpenToolStripMenuItem";
-            OpenToolStripMenuItem.Size = new Size(114, 22);
+            OpenToolStripMenuItem.Size = new Size(180, 22);
             OpenToolStripMenuItem.Text = "Open";
             OpenToolStripMenuItem.Click += OpenToolStripMenuItem_Click;
             // 
             // SaveAsToolStripMenuItem
             // 
             SaveAsToolStripMenuItem.Name = "SaveAsToolStripMenuItem";
-            SaveAsToolStripMenuItem.Size = new Size(114, 22);
+            SaveAsToolStripMenuItem.Size = new Size(180, 22);
             SaveAsToolStripMenuItem.Text = "Save as";
             SaveAsToolStripMenuItem.Click += SaveAsToolStripMenuItem_Click;
             // 
-            // SettingToolStripMenuItem
+            // ExportToolStripMenuItem
             // 
-            SettingToolStripMenuItem.Name = "SettingToolStripMenuItem";
-            SettingToolStripMenuItem.Size = new Size(57, 20);
-            SettingToolStripMenuItem.Text = "Setting";
+            ExportToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { ExportAESFileToolStripMenuItem });
+            ExportToolStripMenuItem.Name = "ExportToolStripMenuItem";
+            ExportToolStripMenuItem.Size = new Size(53, 20);
+            ExportToolStripMenuItem.Text = "Export";
             // 
             // MainTabControl
             // 
@@ -365,6 +367,13 @@
             TabPage2.Text = "Detail";
             TabPage2.UseVisualStyleBackColor = true;
             // 
+            // ExportAESFileToolStripMenuItem
+            // 
+            ExportAESFileToolStripMenuItem.Name = "ExportAESFileToolStripMenuItem";
+            ExportAESFileToolStripMenuItem.Size = new Size(180, 22);
+            ExportAESFileToolStripMenuItem.Text = "Export AES file";
+            ExportAESFileToolStripMenuItem.Click += ExportAESFileToolStripMenuItem_Click;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -406,7 +415,7 @@
         private MenuStrip DefaultMenuStrip;
         private ToolStripMenuItem FileToolStripMenuItem;
         private ToolStripMenuItem OpenToolStripMenuItem;
-        private ToolStripMenuItem SettingToolStripMenuItem;
+        private ToolStripMenuItem ExportToolStripMenuItem;
         private ToolStripMenuItem NewToolStripMenuItem;
         private TabControl MainTabControl;
         private TabPage TabPage1;
@@ -421,5 +430,6 @@
         private TableLayoutPanel tableLayoutPanel3;
         private Button TodoCancelButton;
         private Button TodoSaveButton;
+        private ToolStripMenuItem ExportAESFileToolStripMenuItem;
     }
 }

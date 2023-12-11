@@ -34,7 +34,7 @@ namespace Scheduler.Data
         /// <param name="text"> 평문 비밀번호 </param>
         public void SetPass(string text)
         {
-            Pass = SHA256.HashData(Encoding.UTF8.GetBytes(text));
+            Pass = SHA256.HashData(Encoding.Unicode.GetBytes(text));
         }
 
         /// <summary>
@@ -58,33 +58,28 @@ namespace Scheduler.Data
             }
             else
             {
-                while (true)
+                byte[] enc;
+
+                using (BinaryReader reader = new BinaryReader(File.OpenRead(path)))
                 {
-                    byte[] enc;
+                    enc = reader.ReadBytes((int)new FileInfo(path).Length);
+                }
 
-                    using (BinaryReader reader = new BinaryReader(File.OpenRead(path)))
-                    {
-                        enc = reader.ReadBytes((int)new FileInfo(path).Length);
-                    }
+                Aes aes = Aes.Create();
+                aes.Key = Pass;
+                aes.BlockSize = 128;
 
-                    Aes aes = Aes.Create();
-                    aes.Key = Pass;
-                    aes.BlockSize = 128;
+                try
+                {
+                    byte[] dec = aes.DecryptCbc(enc, Pass[0..16]);
+                    texts = Encoding.Unicode.GetString(dec).Split("\r\n");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Invalid password!");
+                    Debug.WriteLine(ex);
 
-                    try
-                    {
-                        byte[] dec = aes.DecryptCbc(enc, Pass[0..16]);
-                        texts = Encoding.UTF8.GetString(dec).Split("\r\n");
-
-                        break;
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show("Invalid password!");
-                        Debug.WriteLine(ex);
-
-                        return false;
-                    }
+                    return false;
                 }
             }
 
@@ -126,23 +121,13 @@ namespace Scheduler.Data
                 Aes aes = Aes.Create();
                 aes.Key = Pass;
                 aes.BlockSize = 128;
-                byte[] enc = aes.EncryptCbc(Encoding.UTF8.GetBytes(texts), Pass[0..16]);
+                byte[] enc = aes.EncryptCbc(Encoding.Unicode.GetBytes(texts), Pass[0..16]);
 
                 using (BinaryWriter writer = new BinaryWriter(File.OpenWrite(path)))
                 {
                     writer.Write(enc);
                 }
             }
-        }
-
-        /// <summary>
-        /// 비밀번호 비교
-        /// </summary>
-        /// <param name="text"> 비교할 비밀번호 평문 </param>
-        /// <returns> 해시 값을 비교, 새 비밀번호가 기존의 비밀번호와 일치하는 지 반환 </returns>
-        public bool ComparePass(string text)
-        {
-            return Pass.Equals(SHA256.HashData(Encoding.UTF8.GetBytes(text)));
         }
     }
 }

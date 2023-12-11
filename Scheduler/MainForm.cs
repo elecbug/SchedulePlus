@@ -1,5 +1,6 @@
 using Scheduler.CustomControl;
 using Scheduler.Data;
+using System.Diagnostics;
 using System.Security.Cryptography;
 using System.Text;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
@@ -51,9 +52,14 @@ namespace Scheduler
                     {
                         this.DataBook.SetPass(form.PasswordBox.Text);
 
-                        if (this.DataBook.Load(path, true) == false)
+                        if (this.DataBook.Load(FilePath, true) == true)
                         {
-                            this.Close();
+                            RefreshList();
+                            RefreshTreeView();
+
+                            this.DataBook.SetPass("");
+                            this.FilePath = FilePath + ".sch";
+                            this.DataBook.Save(this.FilePath, false);
                         }
                     }
                 }
@@ -127,8 +133,9 @@ namespace Scheduler
             if (item != null)
             {
                 item.IsCleared = e.NewValue == CheckState.Checked;
-                SaveTodo();
             }
+
+            SaveTodo();
         }
 
         private void RefreshList(bool sorted = false)
@@ -199,8 +206,8 @@ namespace Scheduler
                 item.IsDDayTask = this.DDayTaskButton.Checked;
             }
 
-            if (File.Exists(this.FilePath))
-                this.DataBook.Save(this.FilePath, this.DataBook.UsedPass);
+            this.DataBook.Save(this.FilePath, this.DataBook.UsedPass);
+            Debug.WriteLine(Encoding.UTF8.GetString(this.DataBook.Pass) + this.DataBook.UsedPass);
 
             RefreshTreeView();
         }
@@ -242,10 +249,16 @@ namespace Scheduler
                     if (form.ShowDialog() == DialogResult.OK)
                     {
                         this.DataBook.SetPass(form.PasswordBox.Text);
-                        this.DataBook.Load(dialog.FileName, true);
 
-                        RefreshList();
-                        RefreshTreeView();
+                        if (this.DataBook.Load(dialog.FileName, true) == true)
+                        {
+                            RefreshList();
+                            RefreshTreeView();
+
+                            this.DataBook.SetPass("");
+                            this.FilePath = FilePath + ".sch";
+                            this.DataBook.Save(this.FilePath, false);
+                        }
                     }
                 }
             }
@@ -254,31 +267,43 @@ namespace Scheduler
         {
             SaveFileDialog dialog = new SaveFileDialog()
             {
-                Filter = "Schedule File|*.sch|AES Crypto Schedule File|*.esch",
+                Filter = "Schedule File|*.sch",
             };
 
             if (dialog.ShowDialog() == DialogResult.OK)
             {
                 this.FilePath = dialog.FileName;
+                this.DataBook.UsedPass = false;
+                this.DataBook.Save(dialog.FileName, false);
+            }
+        }
+        private void ExportAESFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog dialog = new SaveFileDialog()
+            {
+                Filter = "AES Encrypted Schedule File|*.esch",
+            };
 
-                if (this.FilePath.Split('.').Last() == "sch")
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                string nowPath = this.FilePath;
+
+                this.FilePath = dialog.FileName;
+
+                PasswordForm form = new PasswordForm(EnterNewPass);
+
+                if (form.ShowDialog() == DialogResult.OK)
                 {
-                    this.DataBook.UsedPass = false;
-                    this.DataBook.Save(dialog.FileName, false);
-                }
-                else if (this.FilePath.Split('.').Last() == "esch")
-                {
-                    PasswordForm form = new PasswordForm(EnterNewPass);
+                    this.DataBook.UsedPass = true;
+                    this.DataBook.SetPass(form.PasswordBox.Text);
+                    this.DataBook.Save(dialog.FileName, true);
 
-                    if (form.ShowDialog() == DialogResult.OK)
-                    {
-                        this.DataBook.UsedPass = true;
-                        this.DataBook.SetPass(form.PasswordBox.Text);
-                        this.DataBook.Save(dialog.FileName, true);
-
-                        RefreshList();
-                    }
+                    RefreshList();
                 }
+
+                this.DataBook.UsedPass = false;
+                this.DataBook.SetPass("");
+                this.FilePath = nowPath;
             }
         }
 
@@ -318,6 +343,7 @@ namespace Scheduler
         private void SaveButton_Click(object sender, EventArgs e)
         {
             SaveTodo();
+            this.TodoListBox.Refresh();
             IsSaved = true;
         }
         private void CancelButton_Click(object sender, EventArgs e)
