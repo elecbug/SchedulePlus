@@ -167,9 +167,25 @@ namespace Scheduler
                     || todo.IsDDayTask == true)
                     && todo.IsCleared == false)
                 {
+                    int day = (DateTime.Now.Date - todo.DateTime.Date).Days;
+                    string dayStr;
+
+                    if (day > 0)
+                    {
+                        dayStr = "+" + day;
+                    }
+                    else if (day < 0)
+                    {
+                        dayStr = "" + day;
+                    }
+                    else
+                    {
+                        dayStr = "-Day";
+                    }
+
                     this.MainTreeView.Nodes
                         .Add(todo.DateTime.ToString("yy-MM-dd") + " " + todo.Title
-                            + (todo.IsDDayTask == true ? " (D-" + ((todo.DateTime - DateTime.Now).Days + 1) + ")" : ""));
+                            + (todo.IsDDayTask == true ? " (D" + dayStr + ")" : ""));
                 }
             }
         }
@@ -332,6 +348,8 @@ namespace Scheduler
                 SaveTodo();
                 RefreshList();
                 RefreshTodo(null);
+
+                IsSaved = true;
             }
         }
         private void SortButton_Click(object sender, EventArgs e)
