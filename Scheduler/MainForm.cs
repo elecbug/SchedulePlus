@@ -197,10 +197,10 @@ namespace Scheduler
                 item.Title = this.TitleTextBox.Text;
                 item.Description = this.DescryptTextBox.Text;
                 item.IsDDayTask = this.DDayTaskButton.Checked;
-
-                if (File.Exists(this.FilePath))
-                    this.DataBook.Save(this.FilePath, this.DataBook.UsedPass);
             }
+
+            if (File.Exists(this.FilePath))
+                this.DataBook.Save(this.FilePath, this.DataBook.UsedPass);
 
             RefreshTreeView();
         }
@@ -312,6 +312,7 @@ namespace Scheduler
         private void SortButton_Click(object sender, EventArgs e)
         {
             RefreshList(true);
+            SaveTodo();
         }
 
         private void SaveButton_Click(object sender, EventArgs e)
