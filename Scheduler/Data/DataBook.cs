@@ -1,5 +1,4 @@
-﻿using Scheduler.CustomControl;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
@@ -45,7 +44,7 @@ namespace Scheduler.Data
         /// <returns> 데이터를 불러오는데 성공하였는 지 여부 </returns>
         public bool Load(string path, bool usedAES)
         {
-            this.UsedPass = usedAES;
+            UsedPass = usedAES;
 
             string[] texts;
 
@@ -102,7 +101,7 @@ namespace Scheduler.Data
                 File.Create(path).Close();
             }
 
-            this.UsedPass = usedAES;
+            UsedPass = usedAES;
 
             string texts =
                 JsonSerializer.Serialize(Todos) + "\r\n" +
