@@ -15,9 +15,9 @@ namespace Scheduler.Data
         /// </summary>
         public List<Todo> Todos { get; private set; } = new List<Todo>();
         /// <summary>
-        /// 메모 목록 - 미사용
+        /// 메모 목록
         /// </summary>
-        public List<string> Memos { get; private set; } = new List<string>();
+        public List<LabelWrapper> Memos { get; private set; } = new List<LabelWrapper>();
         /// <summary>
         /// 해시된 비밀번호
         /// </summary>
@@ -83,7 +83,7 @@ namespace Scheduler.Data
             }
 
             Todos = JsonSerializer.Deserialize<List<Todo>>(texts[0]) ?? new List<Todo>();
-            Memos = JsonSerializer.Deserialize<List<string>>(texts[1]) ?? new List<string>();
+            Memos = JsonSerializer.Deserialize<List<LabelWrapper>>(texts[1]) ?? new List<LabelWrapper>();
             Pass = JsonSerializer.Deserialize<byte[]>(texts[2]) ?? new byte[0];
 
             return true;

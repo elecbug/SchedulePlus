@@ -57,12 +57,7 @@
             TabPage3 = new TabPage();
             MemoSplitter = new SplitContainer();
             MemoTextBox = new RichTextBox();
-            tableLayoutPanel4 = new TableLayoutPanel();
-            MemoListView = new ListView();
-            tableLayoutPanel5 = new TableLayoutPanel();
-            MemoAddButton = new Button();
-            MemoRemoveButton = new Button();
-            MemoSortButton = new Button();
+            DrawingPanel = new Panel();
             ((System.ComponentModel.ISupportInitialize)MainSplitContainer).BeginInit();
             MainSplitContainer.Panel1.SuspendLayout();
             MainSplitContainer.Panel2.SuspendLayout();
@@ -80,8 +75,6 @@
             MemoSplitter.Panel1.SuspendLayout();
             MemoSplitter.Panel2.SuspendLayout();
             MemoSplitter.SuspendLayout();
-            tableLayoutPanel4.SuspendLayout();
-            tableLayoutPanel5.SuspendLayout();
             SuspendLayout();
             // 
             // MainSplitContainer
@@ -395,13 +388,13 @@
             // 
             // MemoSplitter.Panel1
             // 
-            MemoSplitter.Panel1.Controls.Add(MemoTextBox);
+            MemoSplitter.Panel1.Controls.Add(DrawingPanel);
             // 
             // MemoSplitter.Panel2
             // 
-            MemoSplitter.Panel2.Controls.Add(tableLayoutPanel4);
+            MemoSplitter.Panel2.Controls.Add(MemoTextBox);
             MemoSplitter.Size = new Size(1085, 629);
-            MemoSplitter.SplitterDistance = 722;
+            MemoSplitter.SplitterDistance = 803;
             MemoSplitter.TabIndex = 0;
             // 
             // MemoTextBox
@@ -409,86 +402,19 @@
             MemoTextBox.Dock = DockStyle.Fill;
             MemoTextBox.Location = new Point(0, 0);
             MemoTextBox.Name = "MemoTextBox";
-            MemoTextBox.Size = new Size(722, 629);
+            MemoTextBox.Size = new Size(278, 629);
             MemoTextBox.TabIndex = 0;
             MemoTextBox.Text = "";
             // 
-            // tableLayoutPanel4
+            // DrawingPanel
             // 
-            tableLayoutPanel4.ColumnCount = 1;
-            tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
-            tableLayoutPanel4.Controls.Add(MemoListView, 0, 0);
-            tableLayoutPanel4.Controls.Add(tableLayoutPanel5, 0, 1);
-            tableLayoutPanel4.Dock = DockStyle.Fill;
-            tableLayoutPanel4.Location = new Point(0, 0);
-            tableLayoutPanel4.Name = "tableLayoutPanel4";
-            tableLayoutPanel4.RowCount = 2;
-            tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Absolute, 40F));
-            tableLayoutPanel4.Size = new Size(359, 629);
-            tableLayoutPanel4.TabIndex = 1;
-            // 
-            // MemoListView
-            // 
-            MemoListView.Dock = DockStyle.Fill;
-            MemoListView.Location = new Point(3, 3);
-            MemoListView.MultiSelect = false;
-            MemoListView.Name = "MemoListView";
-            MemoListView.Size = new Size(353, 583);
-            MemoListView.TabIndex = 0;
-            MemoListView.UseCompatibleStateImageBehavior = false;
-            MemoListView.View = View.Tile;
-            MemoListView.SelectedIndexChanged += MemoListView_SelectedIndexChanged;
-            // 
-            // tableLayoutPanel5
-            // 
-            tableLayoutPanel5.ColumnCount = 3;
-            tableLayoutPanel5.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333321F));
-            tableLayoutPanel5.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333321F));
-            tableLayoutPanel5.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333321F));
-            tableLayoutPanel5.Controls.Add(MemoAddButton, 0, 0);
-            tableLayoutPanel5.Controls.Add(MemoRemoveButton, 1, 0);
-            tableLayoutPanel5.Controls.Add(MemoSortButton, 2, 0);
-            tableLayoutPanel5.Dock = DockStyle.Fill;
-            tableLayoutPanel5.Location = new Point(3, 592);
-            tableLayoutPanel5.Name = "tableLayoutPanel5";
-            tableLayoutPanel5.RowCount = 1;
-            tableLayoutPanel5.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tableLayoutPanel5.Size = new Size(353, 34);
-            tableLayoutPanel5.TabIndex = 1;
-            // 
-            // MemoAddButton
-            // 
-            MemoAddButton.Dock = DockStyle.Fill;
-            MemoAddButton.Location = new Point(3, 3);
-            MemoAddButton.Name = "MemoAddButton";
-            MemoAddButton.Size = new Size(111, 28);
-            MemoAddButton.TabIndex = 0;
-            MemoAddButton.Text = "Add";
-            MemoAddButton.UseVisualStyleBackColor = true;
-            MemoAddButton.Click += MemoAddButton_Click;
-            // 
-            // MemoRemoveButton
-            // 
-            MemoRemoveButton.Dock = DockStyle.Fill;
-            MemoRemoveButton.Location = new Point(120, 3);
-            MemoRemoveButton.Name = "MemoRemoveButton";
-            MemoRemoveButton.Size = new Size(111, 28);
-            MemoRemoveButton.TabIndex = 0;
-            MemoRemoveButton.Text = "Remove";
-            MemoRemoveButton.UseVisualStyleBackColor = true;
-            MemoRemoveButton.Click += MemoRemoveButton_Click;
-            // 
-            // MemoSortButton
-            // 
-            MemoSortButton.Dock = DockStyle.Fill;
-            MemoSortButton.Location = new Point(237, 3);
-            MemoSortButton.Name = "MemoSortButton";
-            MemoSortButton.Size = new Size(113, 28);
-            MemoSortButton.TabIndex = 0;
-            MemoSortButton.Text = "Sort";
-            MemoSortButton.UseVisualStyleBackColor = true;
-            MemoSortButton.Click += MemoSortButton_Click;
+            DrawingPanel.Dock = DockStyle.Fill;
+            DrawingPanel.Location = new Point(0, 0);
+            DrawingPanel.Name = "DrawingPanel";
+            DrawingPanel.Size = new Size(803, 629);
+            DrawingPanel.TabIndex = 0;
+            DrawingPanel.Paint += DrawingPanel_Paint;
+            DrawingPanel.DoubleClick += DrawingPanel_DoubleClick;
             // 
             // MainForm
             // 
@@ -519,8 +445,6 @@
             MemoSplitter.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)MemoSplitter).EndInit();
             MemoSplitter.ResumeLayout(false);
-            tableLayoutPanel4.ResumeLayout(false);
-            tableLayoutPanel5.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -556,11 +480,6 @@
         private TabPage TabPage3;
         private SplitContainer MemoSplitter;
         private RichTextBox MemoTextBox;
-        private ListView MemoListView;
-        private TableLayoutPanel tableLayoutPanel4;
-        private TableLayoutPanel tableLayoutPanel5;
-        private Button MemoAddButton;
-        private Button MemoRemoveButton;
-        private Button MemoSortButton;
+        private Panel DrawingPanel;
     }
 }

@@ -66,7 +66,7 @@ namespace Scheduler
 
             RefreshList();
             RefreshTreeView();
-            RefreshMemoView();
+            RefreshMemo();
         }
 
         private void AddTestData()
@@ -90,8 +90,6 @@ namespace Scheduler
                 IsDDayTask = false,
                 TaskId = 3,
             });
-            data.Memos.Add("Hello");
-            data.Memos.Add("Mom");
             data.SetPass("lol");
 
             data.Save(Environment.CurrentDirectory + "\\test.sch", true);
@@ -137,15 +135,6 @@ namespace Scheduler
             }
 
             SaveTodo();
-        }
-
-        private void MemoListView_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            SaveMemo();
-
-            MemoTextBox.Text = MemoListView.SelectedItems[0].Text;
-
-            MemoTextBox.Refresh();
         }
 
         private void RefreshList(bool sorted = false)
@@ -222,13 +211,22 @@ namespace Scheduler
                 NowTaskId = Todo.NOT_TASK;
             }
         }
-        private void RefreshMemoView()
+        private void RefreshMemo()
         {
-            MemoListView.Items.Clear();
+            DrawingPanel.Controls.Clear();
 
-            for (int i = 0; i < DataBook.Memos.Count; i++)
+            foreach (var item in DataBook.Memos)
             {
-                MemoListView.Items.Add(DataBook.Memos[i]);
+                Label label = new Label() 
+                {
+                    Parent = DrawingPanel,
+                    Visible = true,
+                    Location = new Point(item.X, item.Y),
+                    Text = item.Text,
+                    AutoSize = true,
+                    BackColor = Color.LightGoldenrodYellow,
+                };
+                label.MouseClick += DrawingPanel_MemoClick;
             }
         }
 
@@ -253,15 +251,8 @@ namespace Scheduler
         }
         private void SaveMemo()
         {
-            if (MemoListView.SelectedItems.Count != 0)
-            {
-                DataBook.Memos[MemoListView.SelectedIndices[0]] = MemoListView.SelectedItems[0].Text;
-            }
-
             DataBook.Save(FilePath, DataBook.UsedPass);
             Debug.WriteLine(Encoding.UTF8.GetString(DataBook.Pass) + DataBook.UsedPass);
-
-            RefreshMemoView();
         }
 
         private void NewToolStripMenuItem_Click(object sender, EventArgs e)
@@ -272,6 +263,7 @@ namespace Scheduler
 
                 RefreshList();
                 RefreshTodo(null);
+                RefreshMemo();
 
                 FilePath = "";
             }
@@ -293,6 +285,7 @@ namespace Scheduler
 
                     RefreshList();
                     RefreshTreeView();
+                    RefreshMemo();
                 }
                 else if (FilePath.Split('.').Last() == "esch")
                 {
@@ -306,6 +299,7 @@ namespace Scheduler
                         {
                             RefreshList();
                             RefreshTreeView();
+                            RefreshMemo();
 
                             DataBook.SetPass("");
                             FilePath = FilePath + ".sch";
@@ -394,28 +388,6 @@ namespace Scheduler
             SaveTodo();
         }
 
-        private void MemoAddButton_Click(object sender, EventArgs e)
-        {
-            ListViewItem item = new ListViewItem() 
-            {
-                Text = "",
-            };
-
-            MemoListView.Items.Add(item);
-            DataBook.Memos.Add("");
-
-            RefreshMemoView();
-            SaveMemo();
-        }
-        private void MemoRemoveButton_Click(object sender, EventArgs e)
-        {
-
-        }
-        private void MemoSortButton_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void SaveButton_Click(object sender, EventArgs e)
         {
             SaveTodo();
@@ -436,6 +408,65 @@ namespace Scheduler
         private void Todo_Editted(object sender, EventArgs e)
         {
             IsSaved = false;
+        }
+
+        private void DrawingPanel_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+        private void DrawingPanel_DoubleClick(object sender, EventArgs e)
+        {
+            if (MemoTextBox.Text == "")
+            {
+                return;
+            }
+
+            Label label = new Label()
+            {
+                Parent = DrawingPanel,
+                Visible = true,
+                Text = MemoTextBox.Text,
+                Location = DrawingPanel.PointToClient(MousePosition),
+                AutoSize = true,
+                BackColor = Color.LightGoldenrodYellow,
+            };
+            label.MouseClick += DrawingPanel_MemoClick;
+
+            DataBook.Memos.Add(new LabelWrapper()
+            {
+                X = label.Location.X,
+                Y = label.Location.Y,
+                Text = label.Text,
+            });
+
+            SaveMemo();
+            MemoTextBox.Text = "";
+        }
+        private void DrawingPanel_MemoClick(object? sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                ContextMenuStrip strip = new ContextMenuStrip();
+
+                strip.Items.Add("Remove").Click += (s, e) =>
+                {
+                    Label sen = (sender as Label)!;
+                    LabelWrapper item = DataBook.Memos.Find(x => x.Text == sen.Text && new Point(x.X, x.Y) == sen.Location)!;
+                    
+                    DataBook.Memos.Remove(item);
+                    SaveMemo();
+
+                    sen.Visible = false;
+                };
+
+                strip.Items.Add("Copy to Text Box").Click += (s, e) =>
+                {
+                    Label sen = (sender as Label)!;
+                    MemoTextBox.Text = sen.Text;
+                };
+
+                strip.Show(MousePosition);
+            }
         }
     }
 }
