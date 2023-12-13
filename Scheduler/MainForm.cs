@@ -33,6 +33,7 @@ namespace Scheduler
 
             TitleTextBox.LanguageOption = RichTextBoxLanguageOptions.AutoFont;
             DescryptTextBox.LanguageOption = RichTextBoxLanguageOptions.AutoFont;
+            MemoTextBox.LanguageOption = RichTextBoxLanguageOptions.AutoFont;
 
             if (path != "")
             {
@@ -65,6 +66,7 @@ namespace Scheduler
 
             RefreshList();
             RefreshTreeView();
+            RefreshMemoView();
         }
 
         private void AddTestData()
@@ -135,6 +137,15 @@ namespace Scheduler
             }
 
             SaveTodo();
+        }
+
+        private void MemoListView_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            SaveMemo();
+
+            MemoTextBox.Text = MemoListView.SelectedItems[0].Text;
+
+            MemoTextBox.Refresh();
         }
 
         private void RefreshList(bool sorted = false)
@@ -211,6 +222,16 @@ namespace Scheduler
                 NowTaskId = Todo.NOT_TASK;
             }
         }
+        private void RefreshMemoView()
+        {
+            MemoListView.Items.Clear();
+
+            for (int i = 0; i < DataBook.Memos.Count; i++)
+            {
+                MemoListView.Items.Add(DataBook.Memos[i]);
+            }
+        }
+
         private void SaveTodo()
         {
             Todo? item = DataBook.Todos.Where(x => x.TaskId == NowTaskId).FirstOrDefault();
@@ -229,6 +250,18 @@ namespace Scheduler
             Debug.WriteLine(Encoding.UTF8.GetString(DataBook.Pass) + DataBook.UsedPass);
 
             RefreshTreeView();
+        }
+        private void SaveMemo()
+        {
+            if (MemoListView.SelectedItems.Count != 0)
+            {
+                DataBook.Memos[MemoListView.SelectedIndices[0]] = MemoListView.SelectedItems[0].Text;
+            }
+
+            DataBook.Save(FilePath, DataBook.UsedPass);
+            Debug.WriteLine(Encoding.UTF8.GetString(DataBook.Pass) + DataBook.UsedPass);
+
+            RefreshMemoView();
         }
 
         private void NewToolStripMenuItem_Click(object sender, EventArgs e)
@@ -326,7 +359,7 @@ namespace Scheduler
             }
         }
 
-        private void AddButton_Click(object sender, EventArgs e)
+        private void TodoAddButton_Click(object sender, EventArgs e)
         {
             long id = new Random().NextInt64();
 
@@ -340,7 +373,7 @@ namespace Scheduler
 
             TodoListBox.SelectedIndex = DataBook.Todos.Count - 1;
         }
-        private void RemoveButton_Click(object sender, EventArgs e)
+        private void TodoRemoveButton_Click(object sender, EventArgs e)
         {
             Todo? item = (Todo?)TodoListBox.SelectedItem;
 
@@ -355,10 +388,32 @@ namespace Scheduler
                 IsSaved = true;
             }
         }
-        private void SortButton_Click(object sender, EventArgs e)
+        private void TodoSortButton_Click(object sender, EventArgs e)
         {
             RefreshList(true);
             SaveTodo();
+        }
+
+        private void MemoAddButton_Click(object sender, EventArgs e)
+        {
+            ListViewItem item = new ListViewItem() 
+            {
+                Text = "",
+            };
+
+            MemoListView.Items.Add(item);
+            DataBook.Memos.Add("");
+
+            RefreshMemoView();
+            SaveMemo();
+        }
+        private void MemoRemoveButton_Click(object sender, EventArgs e)
+        {
+
+        }
+        private void MemoSortButton_Click(object sender, EventArgs e)
+        {
+
         }
 
         private void SaveButton_Click(object sender, EventArgs e)

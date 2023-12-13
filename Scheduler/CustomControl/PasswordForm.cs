@@ -21,7 +21,8 @@
             MinimizeBox = false;
             MaximizeBox = false;
             ClientSize = new Size(400, 30);
-            ShowIcon = false;
+            ShowIcon = false; 
+            FormBorderStyle = FormBorderStyle.FixedDialog;
 
             PasswordBox = new TextBox()
             {
@@ -34,6 +35,7 @@
             };
 
             PasswordBox.KeyDown += Password_KeyDown;
+            ClientSize = new Size(ClientSize.Width, PasswordBox.Height + 10);
         }
 
         /// <summary>
