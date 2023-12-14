@@ -8,8 +8,8 @@ namespace Scheduler.Data
 {
     public class LabelWrapper
     {
-        public int X { get; set; }
-        public int Y { get; set; }
+        public int X { get; set; } = 0;
+        public int Y { get; set; } = 0;
         public string Text { get; set; } = "";
     }
 }
