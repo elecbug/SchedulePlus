@@ -407,6 +407,9 @@
             DrawingPanel.TabIndex = 0;
             DrawingPanel.Paint += DrawingPanel_Paint;
             DrawingPanel.DoubleClick += DrawingPanel_DoubleClick;
+            DrawingPanel.MouseDown += DrawingPanel_MouseDown;
+            DrawingPanel.MouseMove += DrawingPanel_MouseMove;
+            DrawingPanel.MouseUp += DrawingPanel_MouseUp;
             // 
             // MemoTextBox
             // 

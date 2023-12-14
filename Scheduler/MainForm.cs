@@ -1,3 +1,4 @@
+using Microsoft.VisualBasic.Devices;
 using Scheduler.CustomControl;
 using Scheduler.Data;
 using System.Diagnostics;
@@ -226,7 +227,10 @@ namespace Scheduler
                     AutoSize = true,
                     BackColor = Color.LightGoldenrodYellow,
                 };
-                label.MouseClick += DrawingPanel_MemoClick;
+                label.MouseClick += DrawingPanel_Memo_Click;
+                label.MouseDown += DrawingPanel_Memo_MouseDown;
+                label.MouseUp += DrawingPanel_Memo_MouseUp;
+                label.MouseMove += DrawingPanel_Memo_MouseMove;
             }
         }
 
@@ -424,6 +428,14 @@ namespace Scheduler
             IsSaved = false;
         }
 
+        /// <summary>
+        /// 패널 클릭 당시 마우스의 위치, 메모를 움직이는데 사용
+        /// </summary>
+        private Point NowMouse { get; set; } = new Point();
+        /// <summary>
+        /// 하나의 레이블만을 옮길 경우 해당 레이블을 의미하는 메모
+        /// </summary>
+        private LabelWrapper NowLabel { get; set; } = new LabelWrapper();
         private void DrawingPanel_Paint(object sender, PaintEventArgs e)
         {
 
@@ -444,7 +456,10 @@ namespace Scheduler
                 AutoSize = true,
                 BackColor = Color.LightGoldenrodYellow,
             };
-            label.MouseClick += DrawingPanel_MemoClick;
+            label.MouseClick += DrawingPanel_Memo_Click;
+            label.MouseDown += DrawingPanel_Memo_MouseDown;
+            label.MouseUp += DrawingPanel_Memo_MouseUp;
+            label.MouseMove += DrawingPanel_Memo_MouseMove;
 
             DataBook.Memos.Add(new LabelWrapper()
             {
@@ -456,7 +471,48 @@ namespace Scheduler
             SaveMemo();
             MemoTextBox.Text = "";
         }
-        private void DrawingPanel_MemoClick(object? sender, MouseEventArgs e)
+        private void DrawingPanel_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                Point mouse = DrawingPanel.PointToClient(MousePosition);
+                Point delta = new Point(mouse.X - NowMouse.X, mouse.Y - NowMouse.Y);
+
+                for (int i = 0; i < DrawingPanel.Controls.Count; i++)
+                {
+                    Control item = (DrawingPanel.Controls[i] as Control)!;
+
+                    item.Location = new Point(DataBook.Memos[i].X + delta.X, DataBook.Memos[i].Y + delta.Y);
+                }
+            }
+        }
+        private void DrawingPanel_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                NowMouse = DrawingPanel.PointToClient(MousePosition);
+            
+                Cursor.Current = Cursors.Hand;
+            }
+        }
+        private void DrawingPanel_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                for (int i = 0; i < DrawingPanel.Controls.Count; i++)
+                {
+                    Control item = (DrawingPanel.Controls[i] as Control)!;
+
+                    DataBook.Memos[i].X = item.Location.X;
+                    DataBook.Memos[i].Y = item.Location.Y;
+                }
+
+                SaveMemo();
+                Cursor.Current = Cursors.Default;
+            }
+        }
+
+        private void DrawingPanel_Memo_Click(object? sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
             {
@@ -480,6 +536,44 @@ namespace Scheduler
                 };
 
                 strip.Show(MousePosition);
+            }
+        }
+        private void DrawingPanel_Memo_MouseMove(object? sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                Point mouse = DrawingPanel.PointToClient(MousePosition);
+                Point delta = new Point(mouse.X - NowMouse.X, mouse.Y - NowMouse.Y);
+
+                Control item = (sender as Control)!;
+
+                item.Location = new Point(NowLabel.X + delta.X,  NowLabel.Y + delta.Y);
+            }
+        }
+        private void DrawingPanel_Memo_MouseUp(object? sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                Control item = (sender as Control)!;
+
+                NowLabel.X = item.Location.X;
+                NowLabel.Y = item.Location.Y;
+
+                SaveMemo();
+                Cursor.Current = Cursors.Default;
+            }
+        }
+        private void DrawingPanel_Memo_MouseDown(object? sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                Control item = (sender as Control)!;
+
+                NowMouse = DrawingPanel.PointToClient(MousePosition);
+                NowLabel = DataBook.Memos
+                    .Find(x => x.Text == item.Text && new Point(x.X, x.Y) == item.Location)!;
+
+                Cursor.Current = Cursors.Hand;
             }
         }
     }
