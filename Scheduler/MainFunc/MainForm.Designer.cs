@@ -49,6 +49,8 @@
             NewToolStripMenuItem = new ToolStripMenuItem();
             OpenToolStripMenuItem = new ToolStripMenuItem();
             SaveAsToolStripMenuItem = new ToolStripMenuItem();
+            settingToolStripMenuItem = new ToolStripMenuItem();
+            FontToolStripMenuItem = new ToolStripMenuItem();
             ExportToolStripMenuItem = new ToolStripMenuItem();
             ExportAESFileToolStripMenuItem = new ToolStripMenuItem();
             MainTabControl = new TabControl();
@@ -59,8 +61,7 @@
             MemoSplitter = new SplitContainer();
             DrawingPanel = new Panel();
             MemoTextBox = new RichTextBox();
-            settingToolStripMenuItem = new ToolStripMenuItem();
-            FontToolStripMenuItem = new ToolStripMenuItem();
+            TopMostToolStripMenuItem = new ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)MainSplitContainer).BeginInit();
             MainSplitContainer.Panel1.SuspendLayout();
             MainSplitContainer.Panel2.SuspendLayout();
@@ -207,6 +208,10 @@
             // 
             // TodoDatePicker
             // 
+            TodoDatePicker.CalendarForeColor = SystemColors.ControlLightLight;
+            TodoDatePicker.CalendarMonthBackground = Color.FromArgb(64, 64, 64);
+            TodoDatePicker.CalendarTitleBackColor = SystemColors.ActiveCaptionText;
+            TodoDatePicker.CalendarTitleForeColor = SystemColors.ControlLightLight;
             TodoDatePicker.Dock = DockStyle.Fill;
             TodoDatePicker.Location = new Point(3, 3);
             TodoDatePicker.Name = "TodoDatePicker";
@@ -281,7 +286,7 @@
             // DefaultMenuStrip
             // 
             DefaultMenuStrip.ImageScalingSize = new Size(20, 20);
-            DefaultMenuStrip.Items.AddRange(new ToolStripItem[] { FileToolStripMenuItem, ExportToolStripMenuItem, settingToolStripMenuItem });
+            DefaultMenuStrip.Items.AddRange(new ToolStripItem[] { FileToolStripMenuItem, settingToolStripMenuItem, ExportToolStripMenuItem });
             DefaultMenuStrip.Location = new Point(0, 0);
             DefaultMenuStrip.Name = "DefaultMenuStrip";
             DefaultMenuStrip.Padding = new Padding(6, 3, 0, 3);
@@ -316,6 +321,20 @@
             SaveAsToolStripMenuItem.Size = new Size(142, 26);
             SaveAsToolStripMenuItem.Text = "Save as";
             SaveAsToolStripMenuItem.Click += SaveAsToolStripMenuItem_Click;
+            // 
+            // settingToolStripMenuItem
+            // 
+            settingToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { FontToolStripMenuItem, TopMostToolStripMenuItem });
+            settingToolStripMenuItem.Name = "settingToolStripMenuItem";
+            settingToolStripMenuItem.Size = new Size(71, 24);
+            settingToolStripMenuItem.Text = "Setting";
+            // 
+            // FontToolStripMenuItem
+            // 
+            FontToolStripMenuItem.Name = "FontToolStripMenuItem";
+            FontToolStripMenuItem.Size = new Size(224, 26);
+            FontToolStripMenuItem.Text = "Font";
+            FontToolStripMenuItem.Click += FontToolStripMenuItem_Click;
             // 
             // ExportToolStripMenuItem
             // 
@@ -357,6 +376,7 @@
             // MainTreeView
             // 
             MainTreeView.Dock = DockStyle.Fill;
+            MainTreeView.LineColor = Color.LightGray;
             MainTreeView.Location = new Point(3, 3);
             MainTreeView.Name = "MainTreeView";
             MainTreeView.Size = new Size(1079, 623);
@@ -422,19 +442,12 @@
             MemoTextBox.TabIndex = 0;
             MemoTextBox.Text = "";
             // 
-            // settingToolStripMenuItem
+            // TopMostToolStripMenuItem
             // 
-            settingToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { FontToolStripMenuItem });
-            settingToolStripMenuItem.Name = "settingToolStripMenuItem";
-            settingToolStripMenuItem.Size = new Size(71, 24);
-            settingToolStripMenuItem.Text = "Setting";
-            // 
-            // FontToolStripMenuItem
-            // 
-            FontToolStripMenuItem.Name = "FontToolStripMenuItem";
-            FontToolStripMenuItem.Size = new Size(224, 26);
-            FontToolStripMenuItem.Text = "Font";
-            FontToolStripMenuItem.Click += FontToolStripMenuItem_Click;
+            TopMostToolStripMenuItem.Name = "TopMostToolStripMenuItem";
+            TopMostToolStripMenuItem.Size = new Size(224, 26);
+            TopMostToolStripMenuItem.Text = "Top Most";
+            TopMostToolStripMenuItem.Click += TopMostToolStripMenuItem_Click;
             // 
             // MainForm
             // 
@@ -504,5 +517,6 @@
         private Panel DrawingPanel;
         private ToolStripMenuItem settingToolStripMenuItem;
         private ToolStripMenuItem FontToolStripMenuItem;
+        private ToolStripMenuItem TopMostToolStripMenuItem;
     }
 }

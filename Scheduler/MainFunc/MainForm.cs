@@ -79,13 +79,7 @@ namespace Scheduler.MainFunc
                 e.Cancel = true;
             }
         }
-    }
 
-    /// <summary>
-    /// 데이터 파트
-    /// </summary>
-    partial class MainForm
-    { 
         private void AddTestData()
         {
             var data = new DataBook();
@@ -249,13 +243,6 @@ namespace Scheduler.MainFunc
                 Debug.WriteLine(ex.ToString());
             }
         }
-    }
-
-    /// <summary>
-    /// Todo 파트
-    /// </summary>
-    partial class MainForm
-    {
 
         private void TodoListBox_Format(object? sender, ListControlConvertEventArgs e)
         {
@@ -344,13 +331,7 @@ namespace Scheduler.MainFunc
         {
             IsSaved = false;
         }
-    }
 
-    /// <summary>
-    /// 메뉴 파트
-    /// </summary>
-    partial class MainForm
-    {
         private void NewToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show("Close this?", "", MessageBoxButtons.OKCancel) == DialogResult.OK)
@@ -463,13 +444,13 @@ namespace Scheduler.MainFunc
                 Properties.Data.Default.Save();
             }
         }
-    }
+        private void TopMostToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            TopMost = !TopMost;
 
-    /// <summary>
-    /// DrawingPanel 파트
-    /// </summary>
-    partial class MainForm
-    { 
+            Opacity = TopMost == true ? 0.85 : 1.0;
+        }
+
         /// <summary>
         /// 패널 클릭 당시 마우스의 위치, 메모를 움직이는데 사용
         /// </summary>
