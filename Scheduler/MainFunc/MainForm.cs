@@ -4,8 +4,11 @@ using Scheduler.Data;
 using System.Diagnostics;
 using System.Text;
 
-namespace Scheduler
+namespace Scheduler.MainFunc
 {
+    /// <summary>
+    /// 메인 폼 부분
+    /// </summary>
     public partial class MainForm : Form
     {
         /// <summary>
@@ -32,6 +35,7 @@ namespace Scheduler
         {
             InitializeComponent();
 
+            Font = Properties.Data.Default.Font;
             TitleTextBox.LanguageOption = RichTextBoxLanguageOptions.AutoFont;
             DescryptTextBox.LanguageOption = RichTextBoxLanguageOptions.AutoFont;
             MemoTextBox.LanguageOption = RichTextBoxLanguageOptions.AutoFont;
@@ -69,7 +73,20 @@ namespace Scheduler
             RefreshTreeView();
             RefreshMemo();
         }
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (MessageBox.Show("Close the Window?", "", MessageBoxButtons.OKCancel) == DialogResult.Cancel)
+            {
+                e.Cancel = true;
+            }
+        }
+    }
 
+    /// <summary>
+    /// 데이터 파트
+    /// </summary>
+    partial class MainForm
+    { 
         private void AddTestData()
         {
             var data = new DataBook();
@@ -97,45 +114,6 @@ namespace Scheduler
             DataBook refresh = new DataBook();
             refresh.SetPass("lol");
             refresh.Load(Environment.CurrentDirectory + "\\test.sch", true);
-        }
-
-        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            if (MessageBox.Show("Close the Window?", "", MessageBoxButtons.OKCancel) == DialogResult.Cancel)
-            {
-                e.Cancel = true;
-            }
-        }
-
-        private void TodoListBox_Format(object? sender, ListControlConvertEventArgs e)
-        {
-            Todo item = (Todo)e.ListItem!;
-            e.Value = item.DateTime.ToString("yy-MM-dd") + " " + item.Title;
-        }
-        private void TodoListBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            TodoListBox.Refresh();
-
-            if (IsSaved == false
-                && MessageBox.Show("Do you want to save editing now?", "", MessageBoxButtons.OKCancel) == DialogResult.OK)
-            {
-                SaveTodo();
-            }
-
-            RefreshTodo(TodoListBox.SelectedItem as Todo ?? null);
-
-            IsSaved = true;
-        }
-        private void TodoListBox_ItemCheck(object sender, ItemCheckEventArgs e)
-        {
-            Todo? item = (Todo?)TodoListBox.SelectedItem;
-
-            if (item != null)
-            {
-                item.IsCleared = e.NewValue == CheckState.Checked;
-            }
-
-            SaveTodo();
         }
 
         private void RefreshList(bool sorted = false)
@@ -272,7 +250,108 @@ namespace Scheduler
                 Debug.WriteLine(ex.ToString());
             }
         }
+    }
 
+    /// <summary>
+    /// Todo 파트
+    /// </summary>
+    partial class MainForm
+    {
+
+        private void TodoListBox_Format(object? sender, ListControlConvertEventArgs e)
+        {
+            Todo item = (Todo)e.ListItem!;
+            e.Value = item.DateTime.ToString("yy-MM-dd") + " " + item.Title;
+        }
+        private void TodoListBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            TodoListBox.Refresh();
+
+            if (IsSaved == false
+                && MessageBox.Show("Do you want to save editing now?", "", MessageBoxButtons.OKCancel) == DialogResult.OK)
+            {
+                SaveTodo();
+            }
+
+            RefreshTodo(TodoListBox.SelectedItem as Todo ?? null);
+
+            IsSaved = true;
+        }
+        private void TodoListBox_ItemCheck(object sender, ItemCheckEventArgs e)
+        {
+            Todo? item = (Todo?)TodoListBox.SelectedItem;
+
+            if (item != null)
+            {
+                item.IsCleared = e.NewValue == CheckState.Checked;
+            }
+
+            SaveTodo();
+        }
+
+        private void TodoAddButton_Click(object sender, EventArgs e)
+        {
+            long id = new Random().NextInt64();
+
+            DataBook.Todos.Add(new Todo()
+            {
+                TaskId = id,
+            });
+
+            SaveTodo();
+            RefreshList();
+
+            TodoListBox.SelectedIndex = DataBook.Todos.Count - 1;
+        }
+        private void TodoRemoveButton_Click(object sender, EventArgs e)
+        {
+            Todo? item = (Todo?)TodoListBox.SelectedItem;
+
+            if (item != null)
+            {
+                DataBook.Todos.Remove(item);
+
+                SaveTodo();
+                RefreshList();
+                RefreshTodo(null);
+
+                IsSaved = true;
+            }
+        }
+        private void TodoSortButton_Click(object sender, EventArgs e)
+        {
+            RefreshList(true);
+            SaveTodo();
+        }
+
+        private void TodoSaveButton_Click(object sender, EventArgs e)
+        {
+            SaveTodo();
+            TodoListBox.Refresh();
+            IsSaved = true;
+        }
+        private void TodoCancelButton_Click(object sender, EventArgs e)
+        {
+            if (IsSaved == false
+                && MessageBox.Show("Do you want to cancel editing?", "", MessageBoxButtons.OKCancel) == DialogResult.OK)
+            {
+                RefreshTodo(null);
+
+                IsSaved = true;
+            }
+        }
+
+        private void Todo_Editted(object sender, EventArgs e)
+        {
+            IsSaved = false;
+        }
+    }
+
+    /// <summary>
+    /// 메뉴 파트
+    /// </summary>
+    partial class MainForm
+    {
         private void NewToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show("Close this?", "", MessageBoxButtons.OKCancel) == DialogResult.OK)
@@ -370,64 +449,28 @@ namespace Scheduler
                 FilePath = nowPath;
             }
         }
-
-        private void TodoAddButton_Click(object sender, EventArgs e)
+        private void FontToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            long id = new Random().NextInt64();
-
-            DataBook.Todos.Add(new Todo()
+            FontDialog dialog = new FontDialog()
             {
-                TaskId = id,
-            });
+                Font = Font,
+            };
 
-            SaveTodo();
-            RefreshList();
-
-            TodoListBox.SelectedIndex = DataBook.Todos.Count - 1;
-        }
-        private void TodoRemoveButton_Click(object sender, EventArgs e)
-        {
-            Todo? item = (Todo?)TodoListBox.SelectedItem;
-
-            if (item != null)
+            if (dialog.ShowDialog() == DialogResult.OK)
             {
-                DataBook.Todos.Remove(item);
+                Font = dialog.Font;
 
-                SaveTodo();
-                RefreshList();
-                RefreshTodo(null);
-
-                IsSaved = true;
+                Properties.Data.Default.Font = Font;
+                Properties.Data.Default.Save();
             }
         }
-        private void TodoSortButton_Click(object sender, EventArgs e)
-        {
-            RefreshList(true);
-            SaveTodo();
-        }
+    }
 
-        private void SaveButton_Click(object sender, EventArgs e)
-        {
-            SaveTodo();
-            TodoListBox.Refresh();
-            IsSaved = true;
-        }
-        private void CancelButton_Click(object sender, EventArgs e)
-        {
-            if (IsSaved == false
-                && MessageBox.Show("Do you want to cancel editing?", "", MessageBoxButtons.OKCancel) == DialogResult.OK)
-            {
-                RefreshTodo(null);
-
-                IsSaved = true;
-            }
-        }
-
-        private void Todo_Editted(object sender, EventArgs e)
-        {
-            IsSaved = false;
-        }
-
+    /// <summary>
+    /// DrawingPanel 파트
+    /// </summary>
+    partial class MainForm
+    { 
         /// <summary>
         /// 패널 클릭 당시 마우스의 위치, 메모를 움직이는데 사용
         /// </summary>
@@ -491,7 +534,7 @@ namespace Scheduler
             if (e.Button == MouseButtons.Left)
             {
                 NowMouse = DrawingPanel.PointToClient(MousePosition);
-            
+
                 Cursor.Current = Cursors.Hand;
             }
         }
@@ -547,7 +590,7 @@ namespace Scheduler
 
                 Control item = (sender as Control)!;
 
-                item.Location = new Point(NowLabel.X + delta.X,  NowLabel.Y + delta.Y);
+                item.Location = new Point(NowLabel.X + delta.X, NowLabel.Y + delta.Y);
             }
         }
         private void DrawingPanel_Memo_MouseUp(object? sender, MouseEventArgs e)

@@ -1,4 +1,4 @@
-﻿namespace Scheduler
+﻿namespace Scheduler.MainFunc
 {
     partial class MainForm
     {
@@ -59,6 +59,8 @@
             MemoSplitter = new SplitContainer();
             DrawingPanel = new Panel();
             MemoTextBox = new RichTextBox();
+            settingToolStripMenuItem = new ToolStripMenuItem();
+            FontToolStripMenuItem = new ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)MainSplitContainer).BeginInit();
             MainSplitContainer.Panel1.SuspendLayout();
             MainSplitContainer.Panel2.SuspendLayout();
@@ -262,7 +264,7 @@
             TodoCancelButton.TabIndex = 2;
             TodoCancelButton.Text = "Cancel";
             TodoCancelButton.UseVisualStyleBackColor = true;
-            TodoCancelButton.Click += CancelButton_Click;
+            TodoCancelButton.Click += TodoCancelButton_Click;
             // 
             // TodoSaveButton
             // 
@@ -274,12 +276,12 @@
             TodoSaveButton.TabIndex = 0;
             TodoSaveButton.Text = "Save";
             TodoSaveButton.UseVisualStyleBackColor = true;
-            TodoSaveButton.Click += SaveButton_Click;
+            TodoSaveButton.Click += TodoSaveButton_Click;
             // 
             // DefaultMenuStrip
             // 
             DefaultMenuStrip.ImageScalingSize = new Size(20, 20);
-            DefaultMenuStrip.Items.AddRange(new ToolStripItem[] { FileToolStripMenuItem, ExportToolStripMenuItem });
+            DefaultMenuStrip.Items.AddRange(new ToolStripItem[] { FileToolStripMenuItem, ExportToolStripMenuItem, settingToolStripMenuItem });
             DefaultMenuStrip.Location = new Point(0, 0);
             DefaultMenuStrip.Name = "DefaultMenuStrip";
             DefaultMenuStrip.Padding = new Padding(6, 3, 0, 3);
@@ -420,6 +422,20 @@
             MemoTextBox.TabIndex = 0;
             MemoTextBox.Text = "";
             // 
+            // settingToolStripMenuItem
+            // 
+            settingToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { FontToolStripMenuItem });
+            settingToolStripMenuItem.Name = "settingToolStripMenuItem";
+            settingToolStripMenuItem.Size = new Size(71, 24);
+            settingToolStripMenuItem.Text = "Setting";
+            // 
+            // FontToolStripMenuItem
+            // 
+            FontToolStripMenuItem.Name = "FontToolStripMenuItem";
+            FontToolStripMenuItem.Size = new Size(224, 26);
+            FontToolStripMenuItem.Text = "Font";
+            FontToolStripMenuItem.Click += FontToolStripMenuItem_Click;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(9F, 20F);
@@ -486,5 +502,7 @@
         private SplitContainer MemoSplitter;
         private RichTextBox MemoTextBox;
         private Panel DrawingPanel;
+        private ToolStripMenuItem settingToolStripMenuItem;
+        private ToolStripMenuItem FontToolStripMenuItem;
     }
 }

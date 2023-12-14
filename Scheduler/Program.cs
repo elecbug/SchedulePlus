@@ -1,3 +1,5 @@
+using Scheduler.MainFunc;
+
 namespace Scheduler
 {
     internal static class Program
