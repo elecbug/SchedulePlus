@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             MainSplitContainer = new SplitContainer();
             tableLayoutPanel1 = new TableLayoutPanel();
             TodoListBox = new CheckedListBox();
@@ -56,8 +57,8 @@
             TabPage2 = new TabPage();
             TabPage3 = new TabPage();
             MemoSplitter = new SplitContainer();
-            MemoTextBox = new RichTextBox();
             DrawingPanel = new Panel();
+            MemoTextBox = new RichTextBox();
             ((System.ComponentModel.ISupportInitialize)MainSplitContainer).BeginInit();
             MainSplitContainer.Panel1.SuspendLayout();
             MainSplitContainer.Panel2.SuspendLayout();
@@ -397,15 +398,6 @@
             MemoSplitter.SplitterDistance = 803;
             MemoSplitter.TabIndex = 0;
             // 
-            // MemoTextBox
-            // 
-            MemoTextBox.Dock = DockStyle.Fill;
-            MemoTextBox.Location = new Point(0, 0);
-            MemoTextBox.Name = "MemoTextBox";
-            MemoTextBox.Size = new Size(278, 629);
-            MemoTextBox.TabIndex = 0;
-            MemoTextBox.Text = "";
-            // 
             // DrawingPanel
             // 
             DrawingPanel.Dock = DockStyle.Fill;
@@ -416,6 +408,15 @@
             DrawingPanel.Paint += DrawingPanel_Paint;
             DrawingPanel.DoubleClick += DrawingPanel_DoubleClick;
             // 
+            // MemoTextBox
+            // 
+            MemoTextBox.Dock = DockStyle.Fill;
+            MemoTextBox.Location = new Point(0, 0);
+            MemoTextBox.Name = "MemoTextBox";
+            MemoTextBox.Size = new Size(278, 629);
+            MemoTextBox.TabIndex = 0;
+            MemoTextBox.Text = "";
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(9F, 20F);
@@ -423,6 +424,7 @@
             ClientSize = new Size(1093, 692);
             Controls.Add(MainTabControl);
             Controls.Add(DefaultMenuStrip);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "MainForm";
             Text = "Scheduler";
             FormClosing += MainForm_FormClosing;

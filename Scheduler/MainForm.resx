@@ -123,4 +123,64 @@
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>25</value>
   </metadata>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        AAABAAEAICAAAAEAGACoDAAAFgAAACgAAAAgAAAAQAAAAAEAGAAAAAAAqAwAAAAAAAAAAAAAAAAAAAAA
+        AAB4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4
+        xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4
+        xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4
+        xsp4xsp4xsp4xsp4xsp4xsr828v828v828v828t4xsoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB4xsp4xsr828v828v8
+        28v828t4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4
+        xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsr828v828v828v828t4xsp4xsp4xsp4xsp4xsp4xsp4
+        xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4
+        xsp4xsr828v828v828v828t4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4
+        xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4
+        xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4
+        xsp4xsp4xsp4xsp4xsp4xsr828v828v828v828t4xsoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB4xsp4xsr828s0ICI0
+        ICL828t4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4
+        xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsr828s0ICI0ICL828t4xsp4xsp4xsp4xsp4xsp4xsp4
+        xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4
+        xsp4xsr828v828v828v828t4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4
+        xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4
+        xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4
+        xsp4xsp4xsp4xsp4xsp4xsr828v828v828v828t4xsoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB4xsp4xsr828v828v8
+        28v828t4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4
+        xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsr828v828v828v828t4xsp4xsp4xsp4xsp4xsp4xsp4
+        xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4
+        xsp4xsr828v828v828v828t4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4
+        xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4
+        xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4
+        xsp4xsp4xsp4xsp4xsp4xsr828v828v828v828t4xsoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB4xsp4xsr828s0ICI0
+        ICL828t4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4
+        xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsr828s0ICI0ICL828t4xsp4xsp4xsp4xsp4xsp4xsp4
+        xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4
+        xsp4xsr828v828v828v828t4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4
+        xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4
+        xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4
+        xsp4xsp4xsp4xsp4xsp4xsr828v828v828v828t4xsoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB4xsp4xsr828s0ICI0
+        ICL828t4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4
+        xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsr828s0ICI0ICL828t4xsp4xsp4xsp4xsp4xsp4xsp4
+        xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4
+        xsp4xsr828v828v828v828t4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4
+        xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4
+        xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4
+        xsp4xsp4xsp4xsp4xsp4xsr828v828v828v828t4xsoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB4xsp4xsr828v828v8
+        28v828t4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4
+        xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsr828v828v828v828t4xsp4xsp4xsp4xsp4xsp4xsp4
+        xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4
+        xsp4xsr828v828v828v828t4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4
+        xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4
+        xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4xsp4
+        xsp4xsp4xsp4xsp4xsoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
+</value>
+  </data>
 </root>

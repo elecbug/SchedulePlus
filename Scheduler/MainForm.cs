@@ -217,7 +217,7 @@ namespace Scheduler
 
             foreach (var item in DataBook.Memos)
             {
-                Label label = new Label() 
+                Label label = new Label()
                 {
                     Parent = DrawingPanel,
                     Visible = true,
@@ -232,27 +232,41 @@ namespace Scheduler
 
         private void SaveTodo()
         {
-            Todo? item = DataBook.Todos.Where(x => x.TaskId == NowTaskId).FirstOrDefault();
-
-            if (item != null)
+            try
             {
-                TodoListBox.Refresh();
+                Todo? item = DataBook.Todos.Where(x => x.TaskId == NowTaskId).FirstOrDefault();
 
-                item.DateTime = TodoDatePicker.Value;
-                item.Title = TitleTextBox.Text;
-                item.Description = DescryptTextBox.Text;
-                item.IsDDayTask = DDayTaskButton.Checked;
+                if (item != null)
+                {
+                    TodoListBox.Refresh();
+
+                    item.DateTime = TodoDatePicker.Value;
+                    item.Title = TitleTextBox.Text;
+                    item.Description = DescryptTextBox.Text;
+                    item.IsDDayTask = DDayTaskButton.Checked;
+                }
+
+                DataBook.Save(FilePath, DataBook.UsedPass);
+                Debug.WriteLine(Encoding.UTF8.GetString(DataBook.Pass) + DataBook.UsedPass);
+
+                RefreshTreeView();
             }
-
-            DataBook.Save(FilePath, DataBook.UsedPass);
-            Debug.WriteLine(Encoding.UTF8.GetString(DataBook.Pass) + DataBook.UsedPass);
-
-            RefreshTreeView();
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.ToString());
+            }
         }
         private void SaveMemo()
         {
-            DataBook.Save(FilePath, DataBook.UsedPass);
-            Debug.WriteLine(Encoding.UTF8.GetString(DataBook.Pass) + DataBook.UsedPass);
+            try
+            {
+                DataBook.Save(FilePath, DataBook.UsedPass);
+                Debug.WriteLine(Encoding.UTF8.GetString(DataBook.Pass) + DataBook.UsedPass);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.ToString());
+            }
         }
 
         private void NewToolStripMenuItem_Click(object sender, EventArgs e)
@@ -452,7 +466,7 @@ namespace Scheduler
                 {
                     Label sen = (sender as Label)!;
                     LabelWrapper item = DataBook.Memos.Find(x => x.Text == sen.Text && new Point(x.X, x.Y) == sen.Location)!;
-                    
+
                     DataBook.Memos.Remove(item);
                     SaveMemo();
 
