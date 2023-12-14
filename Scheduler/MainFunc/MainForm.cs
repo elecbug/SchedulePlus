@@ -1,4 +1,3 @@
-using Microsoft.VisualBasic.Devices;
 using Scheduler.CustomControl;
 using Scheduler.Data;
 using System.Diagnostics;
@@ -569,6 +568,7 @@ namespace Scheduler.MainFunc
                     DataBook.Memos.Remove(item);
                     SaveMemo();
 
+                    DrawingPanel.Controls.Remove(sen);
                     sen.Visible = false;
                 };
 
