@@ -51,6 +51,7 @@
             SaveAsToolStripMenuItem = new ToolStripMenuItem();
             settingToolStripMenuItem = new ToolStripMenuItem();
             FontToolStripMenuItem = new ToolStripMenuItem();
+            TopMostToolStripMenuItem = new ToolStripMenuItem();
             ExportToolStripMenuItem = new ToolStripMenuItem();
             ExportAESFileToolStripMenuItem = new ToolStripMenuItem();
             MainTabControl = new TabControl();
@@ -61,7 +62,6 @@
             MemoSplitter = new SplitContainer();
             DrawingPanel = new Panel();
             MemoTextBox = new RichTextBox();
-            TopMostToolStripMenuItem = new ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)MainSplitContainer).BeginInit();
             MainSplitContainer.Panel1.SuspendLayout();
             MainSplitContainer.Panel2.SuspendLayout();
@@ -84,7 +84,8 @@
             // MainSplitContainer
             // 
             MainSplitContainer.Dock = DockStyle.Fill;
-            MainSplitContainer.Location = new Point(3, 3);
+            MainSplitContainer.Location = new Point(2, 2);
+            MainSplitContainer.Margin = new Padding(2);
             MainSplitContainer.Name = "MainSplitContainer";
             // 
             // MainSplitContainer.Panel1
@@ -94,8 +95,9 @@
             // MainSplitContainer.Panel2
             // 
             MainSplitContainer.Panel2.Controls.Add(TableLayout);
-            MainSplitContainer.Size = new Size(1079, 623);
-            MainSplitContainer.SplitterDistance = 274;
+            MainSplitContainer.Size = new Size(985, 567);
+            MainSplitContainer.SplitterDistance = 249;
+            MainSplitContainer.SplitterWidth = 3;
             MainSplitContainer.TabIndex = 0;
             // 
             // tableLayoutPanel1
@@ -106,20 +108,22 @@
             tableLayoutPanel1.Controls.Add(tableLayoutPanel2, 0, 1);
             tableLayoutPanel1.Dock = DockStyle.Fill;
             tableLayoutPanel1.Location = new Point(0, 0);
+            tableLayoutPanel1.Margin = new Padding(2);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.RowCount = 2;
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 40F));
-            tableLayoutPanel1.Size = new Size(274, 623);
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
+            tableLayoutPanel1.Size = new Size(249, 567);
             tableLayoutPanel1.TabIndex = 1;
             // 
             // TodoListBox
             // 
             TodoListBox.Dock = DockStyle.Fill;
             TodoListBox.FormattingEnabled = true;
-            TodoListBox.Location = new Point(3, 3);
+            TodoListBox.Location = new Point(2, 2);
+            TodoListBox.Margin = new Padding(2);
             TodoListBox.Name = "TodoListBox";
-            TodoListBox.Size = new Size(268, 577);
+            TodoListBox.Size = new Size(245, 533);
             TodoListBox.TabIndex = 0;
             TodoListBox.ItemCheck += TodoListBox_ItemCheck;
             TodoListBox.SelectedIndexChanged += TodoListBox_SelectedIndexChanged;
@@ -135,19 +139,21 @@
             tableLayoutPanel2.Controls.Add(RemoveButton, 1, 0);
             tableLayoutPanel2.Controls.Add(SortButton, 2, 0);
             tableLayoutPanel2.Dock = DockStyle.Fill;
-            tableLayoutPanel2.Location = new Point(3, 586);
+            tableLayoutPanel2.Location = new Point(2, 539);
+            tableLayoutPanel2.Margin = new Padding(2);
             tableLayoutPanel2.Name = "tableLayoutPanel2";
             tableLayoutPanel2.RowCount = 1;
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tableLayoutPanel2.Size = new Size(268, 34);
+            tableLayoutPanel2.Size = new Size(245, 26);
             tableLayoutPanel2.TabIndex = 1;
             // 
             // AddButton
             // 
             AddButton.Dock = DockStyle.Fill;
-            AddButton.Location = new Point(3, 3);
+            AddButton.Location = new Point(2, 2);
+            AddButton.Margin = new Padding(2);
             AddButton.Name = "AddButton";
-            AddButton.Size = new Size(83, 28);
+            AddButton.Size = new Size(77, 22);
             AddButton.TabIndex = 0;
             AddButton.Text = "Add";
             AddButton.UseVisualStyleBackColor = true;
@@ -156,9 +162,10 @@
             // RemoveButton
             // 
             RemoveButton.Dock = DockStyle.Fill;
-            RemoveButton.Location = new Point(92, 3);
+            RemoveButton.Location = new Point(83, 2);
+            RemoveButton.Margin = new Padding(2);
             RemoveButton.Name = "RemoveButton";
-            RemoveButton.Size = new Size(83, 28);
+            RemoveButton.Size = new Size(77, 22);
             RemoveButton.TabIndex = 1;
             RemoveButton.Text = "Remove";
             RemoveButton.UseVisualStyleBackColor = true;
@@ -167,9 +174,10 @@
             // SortButton
             // 
             SortButton.Dock = DockStyle.Fill;
-            SortButton.Location = new Point(181, 3);
+            SortButton.Location = new Point(164, 2);
+            SortButton.Margin = new Padding(2);
             SortButton.Name = "SortButton";
-            SortButton.Size = new Size(84, 28);
+            SortButton.Size = new Size(79, 22);
             SortButton.TabIndex = 2;
             SortButton.Text = "Sort";
             SortButton.UseVisualStyleBackColor = true;
@@ -186,22 +194,24 @@
             TableLayout.Controls.Add(tableLayoutPanel3, 0, 4);
             TableLayout.Dock = DockStyle.Fill;
             TableLayout.Location = new Point(0, 0);
+            TableLayout.Margin = new Padding(2);
             TableLayout.Name = "TableLayout";
             TableLayout.RowCount = 5;
-            TableLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 33F));
-            TableLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 53F));
+            TableLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 25F));
+            TableLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 40F));
             TableLayout.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            TableLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 33F));
-            TableLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 47F));
-            TableLayout.Size = new Size(801, 623);
+            TableLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 25F));
+            TableLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 35F));
+            TableLayout.Size = new Size(733, 567);
             TableLayout.TabIndex = 1;
             // 
             // DescryptTextBox
             // 
             DescryptTextBox.Dock = DockStyle.Fill;
-            DescryptTextBox.Location = new Point(3, 89);
+            DescryptTextBox.Location = new Point(2, 67);
+            DescryptTextBox.Margin = new Padding(2);
             DescryptTextBox.Name = "DescryptTextBox";
-            DescryptTextBox.Size = new Size(795, 451);
+            DescryptTextBox.Size = new Size(729, 438);
             DescryptTextBox.TabIndex = 3;
             DescryptTextBox.Text = "";
             DescryptTextBox.TextChanged += Todo_Editted;
@@ -213,9 +223,10 @@
             TodoDatePicker.CalendarTitleBackColor = SystemColors.ActiveCaptionText;
             TodoDatePicker.CalendarTitleForeColor = SystemColors.ControlLightLight;
             TodoDatePicker.Dock = DockStyle.Fill;
-            TodoDatePicker.Location = new Point(3, 3);
+            TodoDatePicker.Location = new Point(2, 2);
+            TodoDatePicker.Margin = new Padding(2);
             TodoDatePicker.Name = "TodoDatePicker";
-            TodoDatePicker.Size = new Size(795, 27);
+            TodoDatePicker.Size = new Size(729, 23);
             TodoDatePicker.TabIndex = 0;
             TodoDatePicker.ValueChanged += Todo_Editted;
             // 
@@ -223,10 +234,11 @@
             // 
             TitleTextBox.Dock = DockStyle.Fill;
             TitleTextBox.ImeMode = ImeMode.NoControl;
-            TitleTextBox.Location = new Point(3, 36);
+            TitleTextBox.Location = new Point(2, 27);
+            TitleTextBox.Margin = new Padding(2);
             TitleTextBox.Multiline = false;
             TitleTextBox.Name = "TitleTextBox";
-            TitleTextBox.Size = new Size(795, 47);
+            TitleTextBox.Size = new Size(729, 36);
             TitleTextBox.TabIndex = 2;
             TitleTextBox.Text = "";
             TitleTextBox.TextChanged += Todo_Editted;
@@ -234,9 +246,10 @@
             // DDayTaskButton
             // 
             DDayTaskButton.AutoSize = true;
-            DDayTaskButton.Location = new Point(3, 546);
+            DDayTaskButton.Location = new Point(2, 509);
+            DDayTaskButton.Margin = new Padding(2);
             DDayTaskButton.Name = "DDayTaskButton";
-            DDayTaskButton.Size = new Size(124, 24);
+            DDayTaskButton.Size = new Size(100, 19);
             DDayTaskButton.TabIndex = 4;
             DDayTaskButton.Text = "Is D-Day Task";
             DDayTaskButton.UseVisualStyleBackColor = true;
@@ -251,21 +264,19 @@
             tableLayoutPanel3.Controls.Add(TodoCancelButton, 2, 0);
             tableLayoutPanel3.Controls.Add(TodoSaveButton, 1, 0);
             tableLayoutPanel3.Dock = DockStyle.Fill;
-            tableLayoutPanel3.Location = new Point(4, 580);
-            tableLayoutPanel3.Margin = new Padding(4);
+            tableLayoutPanel3.Location = new Point(3, 535);
             tableLayoutPanel3.Name = "tableLayoutPanel3";
             tableLayoutPanel3.RowCount = 1;
             tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tableLayoutPanel3.Size = new Size(793, 39);
+            tableLayoutPanel3.Size = new Size(727, 29);
             tableLayoutPanel3.TabIndex = 5;
             // 
             // TodoCancelButton
             // 
             TodoCancelButton.Dock = DockStyle.Fill;
-            TodoCancelButton.Location = new Point(532, 4);
-            TodoCancelButton.Margin = new Padding(4);
+            TodoCancelButton.Location = new Point(487, 3);
             TodoCancelButton.Name = "TodoCancelButton";
-            TodoCancelButton.Size = new Size(257, 31);
+            TodoCancelButton.Size = new Size(237, 23);
             TodoCancelButton.TabIndex = 2;
             TodoCancelButton.Text = "Cancel";
             TodoCancelButton.UseVisualStyleBackColor = true;
@@ -274,10 +285,9 @@
             // TodoSaveButton
             // 
             TodoSaveButton.Dock = DockStyle.Fill;
-            TodoSaveButton.Location = new Point(268, 4);
-            TodoSaveButton.Margin = new Padding(4);
+            TodoSaveButton.Location = new Point(245, 3);
             TodoSaveButton.Name = "TodoSaveButton";
-            TodoSaveButton.Size = new Size(256, 31);
+            TodoSaveButton.Size = new Size(236, 23);
             TodoSaveButton.TabIndex = 0;
             TodoSaveButton.Text = "Save";
             TodoSaveButton.UseVisualStyleBackColor = true;
@@ -289,8 +299,8 @@
             DefaultMenuStrip.Items.AddRange(new ToolStripItem[] { FileToolStripMenuItem, settingToolStripMenuItem, ExportToolStripMenuItem });
             DefaultMenuStrip.Location = new Point(0, 0);
             DefaultMenuStrip.Name = "DefaultMenuStrip";
-            DefaultMenuStrip.Padding = new Padding(6, 3, 0, 3);
-            DefaultMenuStrip.Size = new Size(1093, 30);
+            DefaultMenuStrip.Padding = new Padding(5, 2, 0, 2);
+            DefaultMenuStrip.Size = new Size(997, 24);
             DefaultMenuStrip.TabIndex = 1;
             DefaultMenuStrip.Text = "menuStrip1";
             // 
@@ -298,27 +308,27 @@
             // 
             FileToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { NewToolStripMenuItem, OpenToolStripMenuItem, SaveAsToolStripMenuItem });
             FileToolStripMenuItem.Name = "FileToolStripMenuItem";
-            FileToolStripMenuItem.Size = new Size(46, 24);
+            FileToolStripMenuItem.Size = new Size(37, 20);
             FileToolStripMenuItem.Text = "File";
             // 
             // NewToolStripMenuItem
             // 
             NewToolStripMenuItem.Name = "NewToolStripMenuItem";
-            NewToolStripMenuItem.Size = new Size(142, 26);
+            NewToolStripMenuItem.Size = new Size(114, 22);
             NewToolStripMenuItem.Text = "New";
             NewToolStripMenuItem.Click += NewToolStripMenuItem_Click;
             // 
             // OpenToolStripMenuItem
             // 
             OpenToolStripMenuItem.Name = "OpenToolStripMenuItem";
-            OpenToolStripMenuItem.Size = new Size(142, 26);
+            OpenToolStripMenuItem.Size = new Size(114, 22);
             OpenToolStripMenuItem.Text = "Open";
             OpenToolStripMenuItem.Click += OpenToolStripMenuItem_Click;
             // 
             // SaveAsToolStripMenuItem
             // 
             SaveAsToolStripMenuItem.Name = "SaveAsToolStripMenuItem";
-            SaveAsToolStripMenuItem.Size = new Size(142, 26);
+            SaveAsToolStripMenuItem.Size = new Size(114, 22);
             SaveAsToolStripMenuItem.Text = "Save as";
             SaveAsToolStripMenuItem.Click += SaveAsToolStripMenuItem_Click;
             // 
@@ -326,27 +336,34 @@
             // 
             settingToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { FontToolStripMenuItem, TopMostToolStripMenuItem });
             settingToolStripMenuItem.Name = "settingToolStripMenuItem";
-            settingToolStripMenuItem.Size = new Size(71, 24);
+            settingToolStripMenuItem.Size = new Size(57, 20);
             settingToolStripMenuItem.Text = "Setting";
             // 
             // FontToolStripMenuItem
             // 
             FontToolStripMenuItem.Name = "FontToolStripMenuItem";
-            FontToolStripMenuItem.Size = new Size(224, 26);
+            FontToolStripMenuItem.Size = new Size(125, 22);
             FontToolStripMenuItem.Text = "Font";
             FontToolStripMenuItem.Click += FontToolStripMenuItem_Click;
+            // 
+            // TopMostToolStripMenuItem
+            // 
+            TopMostToolStripMenuItem.Name = "TopMostToolStripMenuItem";
+            TopMostToolStripMenuItem.Size = new Size(125, 22);
+            TopMostToolStripMenuItem.Text = "Top Most";
+            TopMostToolStripMenuItem.Click += TopMostToolStripMenuItem_Click;
             // 
             // ExportToolStripMenuItem
             // 
             ExportToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { ExportAESFileToolStripMenuItem });
             ExportToolStripMenuItem.Name = "ExportToolStripMenuItem";
-            ExportToolStripMenuItem.Size = new Size(66, 24);
+            ExportToolStripMenuItem.Size = new Size(53, 20);
             ExportToolStripMenuItem.Text = "Export";
             // 
             // ExportAESFileToolStripMenuItem
             // 
             ExportAESFileToolStripMenuItem.Name = "ExportAESFileToolStripMenuItem";
-            ExportAESFileToolStripMenuItem.Size = new Size(192, 26);
+            ExportAESFileToolStripMenuItem.Size = new Size(153, 22);
             ExportAESFileToolStripMenuItem.Text = "Export AES file";
             ExportAESFileToolStripMenuItem.Click += ExportAESFileToolStripMenuItem_Click;
             // 
@@ -356,19 +373,21 @@
             MainTabControl.Controls.Add(TabPage2);
             MainTabControl.Controls.Add(TabPage3);
             MainTabControl.Dock = DockStyle.Fill;
-            MainTabControl.Location = new Point(0, 30);
+            MainTabControl.Location = new Point(0, 24);
+            MainTabControl.Margin = new Padding(2);
             MainTabControl.Name = "MainTabControl";
             MainTabControl.SelectedIndex = 0;
-            MainTabControl.Size = new Size(1093, 662);
+            MainTabControl.Size = new Size(997, 599);
             MainTabControl.TabIndex = 2;
             // 
             // TabPage1
             // 
             TabPage1.Controls.Add(MainTreeView);
-            TabPage1.Location = new Point(4, 29);
+            TabPage1.Location = new Point(4, 24);
+            TabPage1.Margin = new Padding(2);
             TabPage1.Name = "TabPage1";
-            TabPage1.Padding = new Padding(3);
-            TabPage1.Size = new Size(1085, 629);
+            TabPage1.Padding = new Padding(2);
+            TabPage1.Size = new Size(989, 571);
             TabPage1.TabIndex = 0;
             TabPage1.Text = "Today";
             TabPage1.UseVisualStyleBackColor = true;
@@ -377,18 +396,20 @@
             // 
             MainTreeView.Dock = DockStyle.Fill;
             MainTreeView.LineColor = Color.LightGray;
-            MainTreeView.Location = new Point(3, 3);
+            MainTreeView.Location = new Point(2, 2);
+            MainTreeView.Margin = new Padding(2);
             MainTreeView.Name = "MainTreeView";
-            MainTreeView.Size = new Size(1079, 623);
+            MainTreeView.Size = new Size(985, 567);
             MainTreeView.TabIndex = 0;
             // 
             // TabPage2
             // 
             TabPage2.Controls.Add(MainSplitContainer);
-            TabPage2.Location = new Point(4, 29);
+            TabPage2.Location = new Point(4, 24);
+            TabPage2.Margin = new Padding(2);
             TabPage2.Name = "TabPage2";
-            TabPage2.Padding = new Padding(3);
-            TabPage2.Size = new Size(1085, 629);
+            TabPage2.Padding = new Padding(2);
+            TabPage2.Size = new Size(989, 571);
             TabPage2.TabIndex = 1;
             TabPage2.Text = "Detail";
             TabPage2.UseVisualStyleBackColor = true;
@@ -396,9 +417,10 @@
             // TabPage3
             // 
             TabPage3.Controls.Add(MemoSplitter);
-            TabPage3.Location = new Point(4, 29);
+            TabPage3.Location = new Point(4, 24);
+            TabPage3.Margin = new Padding(2);
             TabPage3.Name = "TabPage3";
-            TabPage3.Size = new Size(1085, 629);
+            TabPage3.Size = new Size(989, 571);
             TabPage3.TabIndex = 2;
             TabPage3.Text = "Memo";
             TabPage3.UseVisualStyleBackColor = true;
@@ -407,6 +429,7 @@
             // 
             MemoSplitter.Dock = DockStyle.Fill;
             MemoSplitter.Location = new Point(0, 0);
+            MemoSplitter.Margin = new Padding(2);
             MemoSplitter.Name = "MemoSplitter";
             // 
             // MemoSplitter.Panel1
@@ -416,16 +439,18 @@
             // MemoSplitter.Panel2
             // 
             MemoSplitter.Panel2.Controls.Add(MemoTextBox);
-            MemoSplitter.Size = new Size(1085, 629);
-            MemoSplitter.SplitterDistance = 803;
+            MemoSplitter.Size = new Size(989, 571);
+            MemoSplitter.SplitterDistance = 731;
+            MemoSplitter.SplitterWidth = 3;
             MemoSplitter.TabIndex = 0;
             // 
             // DrawingPanel
             // 
             DrawingPanel.Dock = DockStyle.Fill;
             DrawingPanel.Location = new Point(0, 0);
+            DrawingPanel.Margin = new Padding(2);
             DrawingPanel.Name = "DrawingPanel";
-            DrawingPanel.Size = new Size(803, 629);
+            DrawingPanel.Size = new Size(731, 571);
             DrawingPanel.TabIndex = 0;
             DrawingPanel.Paint += DrawingPanel_Paint;
             DrawingPanel.DoubleClick += DrawingPanel_DoubleClick;
@@ -437,26 +462,21 @@
             // 
             MemoTextBox.Dock = DockStyle.Fill;
             MemoTextBox.Location = new Point(0, 0);
+            MemoTextBox.Margin = new Padding(2);
             MemoTextBox.Name = "MemoTextBox";
-            MemoTextBox.Size = new Size(278, 629);
+            MemoTextBox.Size = new Size(255, 571);
             MemoTextBox.TabIndex = 0;
             MemoTextBox.Text = "";
             // 
-            // TopMostToolStripMenuItem
-            // 
-            TopMostToolStripMenuItem.Name = "TopMostToolStripMenuItem";
-            TopMostToolStripMenuItem.Size = new Size(224, 26);
-            TopMostToolStripMenuItem.Text = "Top Most";
-            TopMostToolStripMenuItem.Click += TopMostToolStripMenuItem_Click;
-            // 
             // MainForm
             // 
-            AutoScaleDimensions = new SizeF(9F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1093, 692);
+            ClientSize = new Size(997, 623);
             Controls.Add(MainTabControl);
             Controls.Add(DefaultMenuStrip);
             Icon = (Icon)resources.GetObject("$this.Icon");
+            Margin = new Padding(2);
             Name = "MainForm";
             Text = "Scheduler";
             FormClosing += MainForm_FormClosing;
