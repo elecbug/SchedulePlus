@@ -5,7 +5,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
 
-namespace Scheduler.Data
+namespace Schewpf.Data
 {
     /// <summary>
     /// 파일 하나 단위와 같은 데이터 북

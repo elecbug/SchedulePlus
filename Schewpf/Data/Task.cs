@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 
-namespace Scheduler.Data
+namespace Schewpf.Data
 {
     /// <summary>
     /// 할 일, 테스크

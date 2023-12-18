@@ -5,7 +5,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace Scheduler.Data
+namespace Schewpf.Data
 {
     public class Memo
     {
