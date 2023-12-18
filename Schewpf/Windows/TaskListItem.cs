@@ -13,23 +13,31 @@ namespace Schewpf.Windows
     {
         public Task Task { get; private set; }
         public CheckBox CheckBox { get; private set; }
+        public Label Label { get; private set; }
         public Button RemoveButton { get; private set; }
 
         public TaskListItem(Task task, bool check, RoutedEventHandler checkd, RoutedEventHandler removed)
         {
-            ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(130) });
-            ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(50) });
-            ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(20) });
+            ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(25) });
+            ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(150) });
+            ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(25) });
 
+            Width = 200;
             Task = task;
 
-            CheckBox = new CheckBox
+            CheckBox = new CheckBox()
             {
                 IsChecked = check,
-                Content = task.DateTime.ToString("yy.MM.dd.") + "\t" + task.Title
+                VerticalAlignment = VerticalAlignment.Center,
             };
             CheckBox.Checked += checkd;
             CheckBox.Unchecked += checkd;
+
+            Label = new Label()
+            {
+                Content = task.DateTime.ToString("yy.MM.dd.") + " " + task.Title,
+                VerticalAlignment = VerticalAlignment.Center,
+            };
 
             RemoveButton = new Button() 
             {
@@ -39,9 +47,10 @@ namespace Schewpf.Windows
             RemoveButton.Click += removed;
             
             Children.Add(CheckBox);
+            Children.Add(Label);
             Children.Add(RemoveButton);
 
-            Width = 200;
+            Grid.SetColumn(Label, 1);
             Grid.SetColumn(RemoveButton, 2);
         }
     }

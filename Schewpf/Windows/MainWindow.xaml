@@ -14,15 +14,18 @@
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
-            <ColumnDefinition Width="0.5*"/>
+            <ColumnDefinition Width="250"/>
             <ColumnDefinition Width="0.75*"/>
         </Grid.ColumnDefinitions>
         <TreeView x:Name="TaskTreeView"
                   Grid.Row="0"
-                  Grid.Column="0"/>
-        <Canvas x:Name="MemoCanvas"
-                Grid.Row="1"
-                Grid.Column="0"/>
+                  Grid.Column="0">
+        </TreeView>
+        <Calendar Margin="243,0,5,5" 
+                  HorizontalContentAlignment="Right" 
+                  VerticalContentAlignment="Center" 
+                  HorizontalAlignment="Right" 
+                  VerticalAlignment="Bottom"/>
         <ListView Grid.Column="1"
                   x:Name="BeforeTaskListView"
                   SelectionChanged="BeforeTaskListView_SelectionChanged"
@@ -62,6 +65,9 @@
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
+                <Button x:Name="TaskAddButton"
+                        Content="Add"
+                        Click="TaskAddButton_Click"/>
                 <Button x:Name="TaskSaveButton"
                         Content="Save"
                         Click="TaskSaveButton_Click"

@@ -75,40 +75,40 @@ namespace Schewpf
             RefreshTreeView();
             RefreshListView();
             RefreshTaskPanel();
-            RefreshMemoFrame();
+            //RefreshMemoFrame();
         }
 
-        /// <summary>
-        /// 메모 프레임만을 재설정
-        /// </summary>
-        private void RefreshMemoFrame()
-        {
-            MemoCanvas.Children.Clear();
+        ///// <summary>
+        ///// 메모 프레임만을 재설정
+        ///// </summary>
+        //private void RefreshMemoFrame()
+        //{
+        //    MemoCanvas.Children.Clear();
 
-            foreach (var item in DataBook.Memos)
-            {
-                AddMemoLabel(item);
-            }
-        }
+        //    foreach (var item in DataBook.Memos)
+        //    {
+        //        AddMemoLabel(item);
+        //    }
+        //}
 
-        /// <summary>
-        /// Memo 객체를 기반으로 메모를 UI에 그림
-        /// </summary>
-        /// <param name="item"> 메모 </param>
-        private void AddMemoLabel(Memo item)
-        {
-            Label label = new Label()
-            {
-                Visibility = Visibility.Visible,
-                Content = item.Text,
-                Background = new SolidColorBrush(Colors.LightGoldenrodYellow),
-            };
+        ///// <summary>
+        ///// Memo 객체를 기반으로 메모를 UI에 그림
+        ///// </summary>
+        ///// <param name="item"> 메모 </param>
+        //private void AddMemoLabel(Memo item)
+        //{
+        //    Label label = new Label()
+        //    {
+        //        Visibility = Visibility.Visible,
+        //        Content = item.Text,
+        //        Background = new SolidColorBrush(Colors.LightGoldenrodYellow),
+        //    };
 
-            MemoCanvas.Children.Add(label);
+        //    MemoCanvas.Children.Add(label);
 
-            Canvas.SetLeft(label, (double)item.X);
-            Canvas.SetTop(label, (double)item.Y);
-        }
+        //    Canvas.SetLeft(label, (double)item.X);
+        //    Canvas.SetTop(label, (double)item.Y);
+        //}
 
         /// <summary>
         /// 할 일을 표시하는 패널의 하위 요소만을 재설정
@@ -151,7 +151,7 @@ namespace Schewpf
                             item.IsCleared = false;
 
                             DataBook.Save(User.Default.FilePath);
-                            RefreshListView();
+                            RefreshByDataBook();
                         },
                         (s, e) =>
                         {
@@ -160,19 +160,19 @@ namespace Schewpf
                                 DataBook.Tasks.Remove(item);
 
                                 DataBook.Save(User.Default.FilePath);
-                                RefreshListView();
+                                RefreshByDataBook();
                             }
                         }));
                 }
                 else
                 {
-                    BeforeTaskListView.Items.Add(new TaskListItem(item, item.IsCleared, 
+                    BeforeTaskListView.Items.Add(new TaskListItem(item, item.IsCleared,
                         (s, e) =>
                         {
                             item.IsCleared = true;
 
                             DataBook.Save(User.Default.FilePath);
-                            RefreshListView();
+                            RefreshByDataBook();
                         },
                         (s, e) =>
                         {
@@ -181,7 +181,7 @@ namespace Schewpf
                                 DataBook.Tasks.Remove(item);
 
                                 DataBook.Save(User.Default.FilePath);
-                                RefreshListView();
+                                RefreshByDataBook();
                             }
                         }));
                 }
@@ -231,17 +231,20 @@ namespace Schewpf
         /// <param name="e"></param>
         private void TaskSaveButton_Click(object sender, RoutedEventArgs e)
         {
-            Task item = DataBook.Tasks.First(x => x.TaskID == SelectedTaskID)!;
+            Task? item = DataBook.Tasks.FirstOrDefault(x => x.TaskID == SelectedTaskID);
 
-            item.DateTime = TaskDateTimePicker.SelectedDate ?? DateTime.Now;
-            item.Title = TaskTitleTextBox.Text;
-            item.Description = TaskDescryptTextBox.Text;
-            item.IsDDayTask = TaskDDayCheckBox.IsChecked == true;
+            if (item != null)
+            {
+                item.DateTime = TaskDateTimePicker.SelectedDate ?? DateTime.Now;
+                item.Title = TaskTitleTextBox.Text;
+                item.Description = TaskDescryptTextBox.Text;
+                item.IsDDayTask = TaskDDayCheckBox.IsChecked == true;
 
-            DataBook.Save(User.Default.FilePath);
-            this.IsSaved = true;
+                DataBook.Save(User.Default.FilePath);
+                this.IsSaved = true;
 
-            RefreshByDataBook();
+                RefreshByDataBook();
+            }
         }
 
         /// <summary>
@@ -322,7 +325,7 @@ namespace Schewpf
             if (item != null)
             {
                 SelectedTaskID = item.Task.TaskID;
-                
+
                 RefreshTaskPanel();
             }
 
@@ -377,6 +380,30 @@ namespace Schewpf
         private void TaskDDayCheckBox_Checked(object sender, RoutedEventArgs e)
         {
             Task_Editted();
+        }
+
+        /// <summary>
+        /// 테스크를 추가하는 버튼
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void TaskAddButton_Click(object sender, RoutedEventArgs e)
+        {
+            DataBook.Tasks.Add(new Task()
+            {
+                TaskID = new Random().NextInt64(),
+                DateTime = DateTime.Now,
+                Title = "",
+                Description = "",
+                IsCleared = false,
+                IsDDayTask = false,
+                ForeignTask = new List<int>(),
+            });
+
+            DataBook.Save(User.Default.FilePath);
+
+            SelectedTaskID = DataBook.Tasks.Last().TaskID;
+            RefreshByDataBook();
         }
     }
 }

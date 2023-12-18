@@ -21,6 +21,10 @@ namespace Schewpf.Data
         /// 메모 목록
         /// </summary>
         public List<Memo> Memos { get; private set; } = new List<Memo>();
+        /// <summary>
+        /// 사람들의 정보를 기록하는 목록
+        /// </summary>
+        public List<Info> Infos { get; private set; } = new List<Info>();
 
         /// <summary>
         /// 데이터를 읽어옴
@@ -40,6 +44,7 @@ namespace Schewpf.Data
             {
                 Tasks = JsonSerializer.Deserialize<List<Task>>(texts[0]) ?? new List<Task>();
                 Memos = JsonSerializer.Deserialize<List<Memo>>(texts[1]) ?? new List<Memo>();
+                Infos = JsonSerializer.Deserialize<List<Info>>(texts[2]) ?? new List<Info>();
 
                 return true;
             }
@@ -64,7 +69,8 @@ namespace Schewpf.Data
 
             string texts =
                 JsonSerializer.Serialize(Tasks) + "\r\n" +
-                JsonSerializer.Serialize(Memos) + "\r\n";
+                JsonSerializer.Serialize(Memos) + "\r\n" +
+                JsonSerializer.Serialize(Infos);
 
             using (StreamWriter writer = new StreamWriter(path))
             {
@@ -79,6 +85,7 @@ namespace Schewpf.Data
         {
             Tasks = new List<Task>();
             Memos = new List<Memo>();
+            Infos = new List<Info>();
         }
     }
 }
