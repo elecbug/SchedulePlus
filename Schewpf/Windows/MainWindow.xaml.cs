@@ -55,13 +55,50 @@ namespace Schewpf
 
             if (DataBook.Load(User.Default.FilePath) == false)
             {
+                MessageBox.Show(User.Default.FilePath + "is corrupted!");
+
                 DataBook.Reset();
             }
 
             RefreshByDataBook();
         }
 
+        /// <summary>
+        /// 데이터 북에 기반하여 화면을 재설정
+        /// </summary>
         private void RefreshByDataBook()
+        {
+            RefreshTreeView();
+            RefreshListView();
+            RefreshTaskFrame();
+            RefreshMemoFrame();
+        }
+
+        /// <summary>
+        /// 메모 프레임만을 재설정
+        /// </summary>
+        private void RefreshMemoFrame()
+        {
+        }
+
+        /// <summary>
+        /// 할 일을 표시하는 프레임의 하위 요소만을 재설정
+        /// </summary>
+        private void RefreshTaskFrame()
+        {
+        }
+
+        /// <summary>
+        /// 할 일 리스트 두 가지를 재설정
+        /// </summary>
+        private void RefreshListView()
+        {
+        }
+
+        /// <summary>
+        /// 오늘 할 일의 목록을 재설정
+        /// </summary>
+        private void RefreshTreeView()
         {
         }
     }
