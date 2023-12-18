@@ -1,12 +1,13 @@
 ﻿using Microsoft.Win32;
 using Schewpf.Data;
 using Schewpf.Settings;
+using Schewpf.Windows;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -25,6 +26,8 @@ namespace Schewpf
     public partial class MainWindow : Window
     {
         private DataBook DataBook = new DataBook();
+        private long SelectedTaskID = Task.NO_TASK;
+        private bool IsSaved = true;
 
         public MainWindow()
         {
@@ -61,6 +64,7 @@ namespace Schewpf
             }
 
             RefreshByDataBook();
+            IsSaved = true;
         }
 
         /// <summary>
@@ -70,7 +74,7 @@ namespace Schewpf
         {
             RefreshTreeView();
             RefreshListView();
-            RefreshTaskFrame();
+            RefreshTaskPanel();
             RefreshMemoFrame();
         }
 
@@ -79,13 +83,54 @@ namespace Schewpf
         /// </summary>
         private void RefreshMemoFrame()
         {
+            MemoCanvas.Children.Clear();
+
+            foreach (var item in DataBook.Memos)
+            {
+                AddMemoLabel(item);
+            }
         }
 
         /// <summary>
-        /// 할 일을 표시하는 프레임의 하위 요소만을 재설정
+        /// Memo 객체를 기반으로 메모를 UI에 그림
         /// </summary>
-        private void RefreshTaskFrame()
+        /// <param name="item"> 메모 </param>
+        private void AddMemoLabel(Memo item)
         {
+            Label label = new Label()
+            {
+                Visibility = Visibility.Visible,
+                Content = item.Text,
+                Background = new SolidColorBrush(Colors.LightGoldenrodYellow),
+            };
+
+            MemoCanvas.Children.Add(label);
+
+            Canvas.SetLeft(label, (double)item.X);
+            Canvas.SetTop(label, (double)item.Y);
+        }
+
+        /// <summary>
+        /// 할 일을 표시하는 패널의 하위 요소만을 재설정
+        /// </summary>
+        private void RefreshTaskPanel()
+        {
+            Task? item = DataBook.Tasks.FirstOrDefault(x => x.TaskID == SelectedTaskID);
+
+            if (item != null)
+            {
+                TaskDateTimePicker.SelectedDate = item.DateTime;
+                TaskTitleTextBox.Text = item.Title;
+                TaskDescryptTextBox.Text = item.Description;
+                TaskDDayCheckBox.IsChecked = item.IsDDayTask;
+            }
+            else
+            {
+                TaskDateTimePicker.SelectedDate = DateTime.Now;
+                TaskTitleTextBox.Text = "";
+                TaskDescryptTextBox.Text = "";
+                TaskDDayCheckBox.IsChecked = false;
+            }
         }
 
         /// <summary>
@@ -93,6 +138,54 @@ namespace Schewpf
         /// </summary>
         private void RefreshListView()
         {
+            BeforeTaskListView.Items.Clear();
+            AfterTaskListView.Items.Clear();
+
+            foreach (var item in DataBook.Tasks)
+            {
+                if (item.IsCleared == true)
+                {
+                    AfterTaskListView.Items.Add(new TaskListItem(item, item.IsCleared,
+                        (s, e) =>
+                        {
+                            item.IsCleared = false;
+
+                            DataBook.Save(User.Default.FilePath);
+                            RefreshListView();
+                        },
+                        (s, e) =>
+                        {
+                            if (MessageBox.Show("Remove this?", "", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+                            {
+                                DataBook.Tasks.Remove(item);
+
+                                DataBook.Save(User.Default.FilePath);
+                                RefreshListView();
+                            }
+                        }));
+                }
+                else
+                {
+                    BeforeTaskListView.Items.Add(new TaskListItem(item, item.IsCleared, 
+                        (s, e) =>
+                        {
+                            item.IsCleared = true;
+
+                            DataBook.Save(User.Default.FilePath);
+                            RefreshListView();
+                        },
+                        (s, e) =>
+                        {
+                            if (MessageBox.Show("Remove this?", "", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+                            {
+                                DataBook.Tasks.Remove(item);
+
+                                DataBook.Save(User.Default.FilePath);
+                                RefreshListView();
+                            }
+                        }));
+                }
+            }
         }
 
         /// <summary>
@@ -100,6 +193,190 @@ namespace Schewpf
         /// </summary>
         private void RefreshTreeView()
         {
+            TaskTreeView.Items.Clear();
+
+            foreach (var todo in DataBook.Tasks)
+            {
+                if ((todo.DateTime.Date <= DateTime.Now.Date
+                    || todo.IsDDayTask == true)
+                    && todo.IsCleared == false)
+                {
+                    int day = (DateTime.Now.Date - todo.DateTime.Date).Days;
+                    string dayStr;
+
+                    if (day > 0)
+                    {
+                        dayStr = "+" + day;
+                    }
+                    else if (day < 0)
+                    {
+                        dayStr = "" + day;
+                    }
+                    else
+                    {
+                        dayStr = "-Day";
+                    }
+
+                    TaskTreeView.Items
+                        .Add(todo.DateTime.ToString("yy-MM-dd") + " " + todo.Title
+                            + (todo.IsDDayTask == true ? " (D" + dayStr + ")" : ""));
+                }
+            }
+        }
+
+        /// <summary>
+        /// 테스크를 저장
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void TaskSaveButton_Click(object sender, RoutedEventArgs e)
+        {
+            Task item = DataBook.Tasks.First(x => x.TaskID == SelectedTaskID)!;
+
+            item.DateTime = TaskDateTimePicker.SelectedDate ?? DateTime.Now;
+            item.Title = TaskTitleTextBox.Text;
+            item.Description = TaskDescryptTextBox.Text;
+            item.IsDDayTask = TaskDDayCheckBox.IsChecked == true;
+
+            DataBook.Save(User.Default.FilePath);
+            this.IsSaved = true;
+
+            RefreshByDataBook();
+        }
+
+        /// <summary>
+        /// 테스크 편집을 취소
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void TaskCancelButton_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// 완료 전 테스크 중 하나를 선택하면 테스크 패널의 정보를 채우며 테스크가 이동함
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BeforeTaskListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (IsSaved == false)
+            {
+                if (MessageBox.Show("Are you sure you want to save the changes?", "",
+                    MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+                {
+                    Task? task = DataBook.Tasks.FirstOrDefault(x => x.TaskID == SelectedTaskID);
+
+                    if (task != null)
+                    {
+                        task.DateTime = TaskDateTimePicker.DisplayDate;
+                        task.Title = TaskTitleTextBox.Text;
+                        task.Description = TaskDescryptTextBox.Text;
+                        task.IsDDayTask = TaskDDayCheckBox.IsChecked == true;
+
+                        DataBook.Save(User.Default.FilePath);
+                    }
+                }
+            }
+
+            TaskListItem? item = BeforeTaskListView.SelectedItem as TaskListItem;
+
+            if (item != null)
+            {
+                SelectedTaskID = item.Task.TaskID;
+
+                RefreshTaskPanel();
+            }
+
+            IsSaved = true;
+        }
+
+        /// <summary>
+        /// 완료 후 테스크 중 하나를 선택하면 테스크 패널의 정보를 채우며 테스크가 이동함
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void AfterTaskListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (IsSaved == false)
+            {
+                if (MessageBox.Show("Are you sure you want to save the changes?", "",
+                    MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+                {
+                    Task? task = DataBook.Tasks.FirstOrDefault(x => x.TaskID == SelectedTaskID);
+
+                    if (task != null)
+                    {
+                        task.DateTime = TaskDateTimePicker.DisplayDate;
+                        task.Title = TaskTitleTextBox.Text;
+                        task.Description = TaskDescryptTextBox.Text;
+                        task.IsDDayTask = TaskDDayCheckBox.IsChecked == true;
+
+                        DataBook.Save(User.Default.FilePath);
+                    }
+                }
+            }
+
+            TaskListItem? item = AfterTaskListView.SelectedItem as TaskListItem;
+
+            if (item != null)
+            {
+                SelectedTaskID = item.Task.TaskID;
+                
+                RefreshTaskPanel();
+            }
+
+            IsSaved = true;
+        }
+
+        /// <summary>
+        /// 테스크가 수정된 후 저장되었는 지 확인하기 위한 이벤트
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Task_Editted()
+        {
+            IsSaved = false;
+        }
+
+        /// <summary>
+        /// 테스크 패널 내 값 변경 시 IsSaved를 false로 변경
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void TaskDateTimePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Task_Editted();
+        }
+
+        /// <summary>
+        /// 테스크 패널 내 값 변경 시 IsSaved를 false로 변경
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void TaskTitleTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Task_Editted();
+        }
+
+        /// <summary>
+        /// 테스크 패널 내 값 변경 시 IsSaved를 false로 변경
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void TaskDescryptTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Task_Editted();
+        }
+
+        /// <summary>
+        /// 테스크 패널 내 값 변경 시 IsSaved를 false로 변경
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void TaskDDayCheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            Task_Editted();
         }
     }
 }

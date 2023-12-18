@@ -9,7 +9,7 @@ namespace Schewpf.Data
     /// </summary>
     public class Task
     {
-        public const int NO_TASK = -1;
+        public const long NO_TASK = -1;
 
         /// <summary>
         /// 테스크마다 부여되는 고유의 ID

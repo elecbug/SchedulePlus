@@ -9,7 +9,7 @@ namespace Schewpf.Data
 {
     public class Memo
     {
-        public const int NO_MEMO = -1;
+        public const long NO_MEMO = -1;
 
         /// <summary>
         /// 메모마다 부여되는 고유의 ID

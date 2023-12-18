@@ -16,7 +16,7 @@ namespace Schewpf.Data
         /// <summary>
         /// 할 일 목록
         /// </summary>
-        public List<Task> Todos { get; private set; } = new List<Task>();
+        public List<Task> Tasks { get; private set; } = new List<Task>();
         /// <summary>
         /// 메모 목록
         /// </summary>
@@ -38,7 +38,7 @@ namespace Schewpf.Data
 
             try
             {
-                Todos = JsonSerializer.Deserialize<List<Task>>(texts[0]) ?? new List<Task>();
+                Tasks = JsonSerializer.Deserialize<List<Task>>(texts[0]) ?? new List<Task>();
                 Memos = JsonSerializer.Deserialize<List<Memo>>(texts[1]) ?? new List<Memo>();
 
                 return true;
@@ -63,7 +63,7 @@ namespace Schewpf.Data
             }
 
             string texts =
-                JsonSerializer.Serialize(Todos) + "\r\n" +
+                JsonSerializer.Serialize(Tasks) + "\r\n" +
                 JsonSerializer.Serialize(Memos) + "\r\n";
 
             using (StreamWriter writer = new StreamWriter(path))
@@ -77,7 +77,7 @@ namespace Schewpf.Data
         /// </summary>
         public void Reset()
         {
-            Todos = new List<Task>();
+            Tasks = new List<Task>();
             Memos = new List<Memo>();
         }
     }

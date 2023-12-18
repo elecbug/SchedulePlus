@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Schewpf"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800"
+        Title="MainWindow" Height="600" Width="1100"
         Loaded="MainWindowLoaded">
     <Grid>
         <Grid.RowDefinitions>
@@ -14,34 +14,63 @@
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="0.5*"/>
+            <ColumnDefinition Width="0.75*"/>
         </Grid.ColumnDefinitions>
         <TreeView x:Name="TaskTreeView"
                   Grid.Row="0"
                   Grid.Column="0"/>
-        <Frame Content="Memo" 
-               x:Name="MemoFrame"
-               Grid.Row="1"
-               Grid.Column="0"/>
+        <Canvas x:Name="MemoCanvas"
+                Grid.Row="1"
+                Grid.Column="0"/>
         <ListView Grid.Column="1"
-                  x:Name="BeforeTaskListView">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn/>
-                </GridView>
-            </ListView.View>
-        </ListView>
+                  x:Name="BeforeTaskListView"
+                  SelectionChanged="BeforeTaskListView_SelectionChanged"
+                  ItemsSource="{Binding Path=Items}"/>
         <ListView Grid.Column="1"
                   Grid.Row="1"
-            x:Name="AfterTaskListView">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn/>
-                </GridView>
-            </ListView.View>
-        </ListView>
-        <Frame Grid.Column="2" Content="Task" Grid.RowSpan="2"/>
-
+                  x:Name="AfterTaskListView"
+                  SelectionChanged="AfterTaskListView_SelectionChanged"
+                  ItemsSource="{Binding Path=Items}"/>
+        <Grid x:Name="TaskPanel"
+                    Grid.Column="2"
+                    Grid.RowSpan="2">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition Height="16*"/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <DatePicker x:Name="TaskDateTimePicker"
+                        Grid.Row="0"
+                        SelectedDateChanged="TaskDateTimePicker_SelectedDateChanged"/>
+            <TextBox x:Name="TaskTitleTextBox"
+                     Grid.Row="1"
+                     TextChanged="TaskTitleTextBox_TextChanged"/>
+            <TextBox x:Name="TaskDescryptTextBox"
+                     Grid.Row="2"
+                     TextChanged="TaskDescryptTextBox_TextChanged"/>
+            <CheckBox x:Name="TaskDDayCheckBox"
+                      Grid.Row="3"
+                      Content="Is D-Day Task"
+                      Checked="TaskDDayCheckBox_Checked"
+                      Unchecked="TaskDDayCheckBox_Checked"/>
+            <Grid Grid.Row="4">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Button x:Name="TaskSaveButton"
+                        Content="Save"
+                        Click="TaskSaveButton_Click"
+                        Grid.Column="1"/>
+                <Button x:Name="TaskCancelButton"
+                        Content="Cancel"
+                        Click="TaskCancelButton_Click"
+                        Grid.Column="2"/>
+            </Grid>
+        </Grid>
     </Grid>
 </Window>
