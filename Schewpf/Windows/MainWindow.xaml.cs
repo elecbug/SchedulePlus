@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using Schewpf.Data;
 using Schewpf.Settings;
 using System;
 using System.Collections.Generic;
@@ -23,11 +24,19 @@ namespace Schewpf
     /// </summary>
     public partial class MainWindow : Window
     {
+        private DataBook DataBook = new DataBook();
+
         public MainWindow()
         {
             InitializeComponent();
         }
 
+        /// <summary>
+        /// 창을 열 때 호출, 미리 저장된 파일 경로가 있다면 그 파일을 열고, 
+        /// 경로가 없거나 파일을 찾을 수 없다면 File Dialog를 호출
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MainWindowLoaded(object sender, RoutedEventArgs e)
         {
             if (!File.Exists(User.Default.FilePath))
@@ -43,6 +52,17 @@ namespace Schewpf
                     User.Default.Save();
                 }
             }
+
+            if (DataBook.Load(User.Default.FilePath) == false)
+            {
+                DataBook.Reset();
+            }
+
+            RefreshByDataBook();
+        }
+
+        private void RefreshByDataBook()
+        {
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Security.Cryptography;
@@ -35,10 +36,19 @@ namespace Schewpf.Data
                 texts = reader.ReadToEnd().Split("\r\n");
             }
 
-            Todos = JsonSerializer.Deserialize<List<Task>>(texts[0]) ?? new List<Task>();
-            Memos = JsonSerializer.Deserialize<List<Memo>>(texts[1]) ?? new List<Memo>();
+            try
+            {
+                Todos = JsonSerializer.Deserialize<List<Task>>(texts[0]) ?? new List<Task>();
+                Memos = JsonSerializer.Deserialize<List<Memo>>(texts[1]) ?? new List<Memo>();
 
-            return true;
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+            
+                return false;
+            }
         }
 
         /// <summary>
@@ -60,6 +70,15 @@ namespace Schewpf.Data
             {
                 writer.Write(texts);
             }
+        }
+
+        /// <summary>
+        /// 기본 데이터 북으로 초기화 함
+        /// </summary>
+        public void Reset()
+        {
+            Todos = new List<Task>();
+            Memos = new List<Memo>();
         }
     }
 }
