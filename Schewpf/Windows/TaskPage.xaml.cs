@@ -132,10 +132,17 @@ namespace Schewpf.Windows
                         {
                             if (MessageBox.Show("Remove this?", "", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
                             {
-                                DataBook.Tasks.Remove(item);
+                                if (SelectedTaskID == item.TaskID)
+                                {
+                                    SelectedTaskID = -1;
+                                }
 
+                                DataBook.Tasks.Remove(item);
                                 DataBook.Save(User.Default.FilePath);
+
                                 RefreshByDataBook();
+
+                                IsSaved = true;
                             }
                         }));
                 }
@@ -153,10 +160,17 @@ namespace Schewpf.Windows
                         {
                             if (MessageBox.Show("Remove this?", "", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
                             {
-                                DataBook.Tasks.Remove(item);
+                                if (SelectedTaskID == item.TaskID)
+                                {
+                                    SelectedTaskID = -1;
+                                }
 
+                                DataBook.Tasks.Remove(item);
                                 DataBook.Save(User.Default.FilePath);
+
                                 RefreshByDataBook();
+
+                                IsSaved = true;
                             }
                         }));
                 }
@@ -366,7 +380,7 @@ namespace Schewpf.Windows
         /// <param name="e"></param>
         private void TaskAddButton_Click(object sender, RoutedEventArgs e)
         {
-            DataBook.Tasks.Add(new Task()
+            Task task = new Task()
             {
                 TaskID = new Random().NextInt64(),
                 DateTime = DateTime.Now,
@@ -375,12 +389,15 @@ namespace Schewpf.Windows
                 IsCleared = false,
                 IsDDayTask = false,
                 ForeignTask = new List<int>(),
-            });
+            };
 
+            DataBook.Tasks.Add(task);
             DataBook.Save(User.Default.FilePath);
 
-            SelectedTaskID = DataBook.Tasks.Last().TaskID;
+            SelectedTaskID = task.TaskID;
             RefreshByDataBook();
+
+            IsSaved = true;
         }
 
         /// <summary>
