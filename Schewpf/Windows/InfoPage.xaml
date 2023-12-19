@@ -1,0 +1,53 @@
+﻿<Page x:Class="Schewpf.Windows.InfoPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Schewpf.Windows"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="InfoPage">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition/>
+            <RowDefinition Height="20"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <ListView
+            x:Name="InfoListView"
+            Grid.RowSpan="4"
+            Grid.ColumnSpan="3"
+            ItemsSource="{Binding Path=Item}"/>
+        <TextBox
+            x:Name="OfficeTextBox"
+            Grid.Column="3"/>
+        <TextBox
+            x:Name="NameTextBox"
+            Grid.Column="5"/>
+        <TextBox
+            x:Name="PhoneTextBox"
+            Grid.Column="3"
+            Grid.Row="1"
+            Grid.ColumnSpan="2"/>
+        <TextBox
+            x:Name="EmailTextBox"
+            Grid.Column="3"
+            Grid.Row="2"
+            Grid.ColumnSpan="2"/>
+        <TextBox
+            x:Name="DescryptTextBox"
+            Grid.Column="3"
+            Grid.Row="3"
+            Grid.ColumnSpan="2"/>
+    </Grid>
+</Page>

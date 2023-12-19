@@ -24,6 +24,13 @@
                         x:Name="MemoFrame"/>
                 </Grid>
             </TabItem>
+            <TabItem 
+                Header="Info">
+                <Grid>
+                    <Frame 
+                        x:Name="InfoFrame"/>
+                </Grid>
+            </TabItem>
         </TabControl>
     </Grid>
 </Window>

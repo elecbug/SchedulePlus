@@ -36,6 +36,7 @@ namespace Schewpf.Windows
             TaskPage mainPage = new TaskPage();
             TaskFrame.Content = mainPage;
             MemoFrame.Content = new MemoPage(mainPage.DataBook);
+            InfoFrame.Content = new InfoPage(mainPage.DataBook);
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)

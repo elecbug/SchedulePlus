@@ -24,7 +24,7 @@ namespace Schewpf.Data
         /// <summary>
         /// 사람들의 정보를 기록하는 목록
         /// </summary>
-        public List<Info> Infos { get; private set; } = new List<Info>();
+        public List<Info> Infos { get; set; } = new List<Info>();
 
         /// <summary>
         /// 데이터를 읽어옴

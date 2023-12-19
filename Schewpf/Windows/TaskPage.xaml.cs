@@ -65,7 +65,7 @@ namespace Schewpf.Windows
 
             if (DataBook.Load(User.Default.FilePath) == false)
             {
-                MessageBox.Show(User.Default.FilePath + "is corrupted!");
+                MessageBox.Show(User.Default.FilePath + " is corrupted!");
 
                 DataBook.Reset();
             }

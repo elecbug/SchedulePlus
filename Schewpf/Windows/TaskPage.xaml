@@ -25,7 +25,6 @@
             x:Name="TaskTreeView"
             Grid.Row="0"
             Grid.Column="0"
-            BorderBrush="LightGray"
             Grid.RowSpan="2">
             <TreeView.FocusVisualStyle>
                 <Style/>
@@ -38,7 +37,7 @@
             VerticalContentAlignment="Center" 
             HorizontalAlignment="Right" 
             VerticalAlignment="Bottom"
-            BorderBrush="LightGray" Grid.Row="1" Height="177"/>
+            Grid.Row="1" Height="177"/>
         <Button 
             x:Name="FileChangeButton"
             Grid.Row="1"
@@ -63,15 +62,13 @@
             Grid.Column="1"
             x:Name="BeforeTaskListView"
             SelectionChanged="BeforeTaskListView_SelectionChanged"
-            ItemsSource="{Binding Path=Items}"
-            BorderBrush="LightGray"/>
+            ItemsSource="{Binding Path=Items}"/>
         <ListView 
             Grid.Column="1"
             Grid.Row="1"
             x:Name="AfterTaskListView"
             SelectionChanged="AfterTaskListView_SelectionChanged"
-            ItemsSource="{Binding Path=Items}"
-            BorderBrush="LightGray"/>
+            ItemsSource="{Binding Path=Items}"/>
         <Grid 
             x:Name="TaskPanel"
             Grid.Column="2"
@@ -88,27 +85,23 @@
                 x:Name="TaskDateTimePicker"
                 Grid.Row="0"
                 SelectedDateChanged="TaskDateTimePicker_SelectedDateChanged" 
-                SelectedDateFormat="Long"
-                BorderBrush="LightGray"/>
+                SelectedDateFormat="Long"/>
             <TextBox 
                 x:Name="TaskTitleTextBox"
                 Grid.Row="1"
-                TextChanged="TaskTitleTextBox_TextChanged"
-                BorderBrush="LightGray"/>
+                TextChanged="TaskTitleTextBox_TextChanged"/>
             <TextBox 
                 x:Name="TaskDescryptTextBox"
                 Grid.Row="2"
                 TextChanged="TaskDescryptTextBox_TextChanged"
                 TextWrapping="Wrap" AcceptsReturn="True"
-                VerticalScrollBarVisibility="Visible"
-                BorderBrush="LightGray"/>
+                VerticalScrollBarVisibility="Visible"/>
             <CheckBox 
                 x:Name="TaskDDayCheckBox"
                 Grid.Row="3"
                 Content="Is D-Day Task"
                 Checked="TaskDDayCheckBox_Checked"
-                Unchecked="TaskDDayCheckBox_Checked"
-                BorderBrush="LightGray"/>
+                Unchecked="TaskDDayCheckBox_Checked"/>
             <Grid 
                 Grid.Row="4">
                 <Grid.ColumnDefinitions>
@@ -119,20 +112,17 @@
                 <Button 
                     x:Name="TaskAddButton"
                     Content="Add"
-                    Click="TaskAddButton_Click"
-                    BorderBrush="LightGray"/>
+                    Click="TaskAddButton_Click"/>
                 <Button 
                     x:Name="TaskSaveButton"
                     Content="Save"
                     Click="TaskSaveButton_Click"
-                    Grid.Column="1"
-                    BorderBrush="LightGray"/>
+                    Grid.Column="1"/>
                 <Button 
                     x:Name="TaskCancelButton"
                     Content="Cancel"
                     Click="TaskCancelButton_Click"
-                    Grid.Column="2"
-                    BorderBrush="LightGray"/>
+                    Grid.Column="2"/>
             </Grid>
         </Grid>
     </Grid>
