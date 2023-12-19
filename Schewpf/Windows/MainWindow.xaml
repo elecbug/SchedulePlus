@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Schewpf"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="1100"
+        Title="Schewpf" Height="600" Width="1100"
         Loaded="MainWindowLoaded">
-    <Grid>
+    <Grid Background="#2F2F2F">
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition/>
@@ -19,22 +19,33 @@
         </Grid.ColumnDefinitions>
         <TreeView x:Name="TaskTreeView"
                   Grid.Row="0"
-                  Grid.Column="0">
+                  Grid.Column="0"
+                  Background="#2F2F2F"
+                  Foreground="White" BorderBrush="Black">
+            <TreeView.FocusVisualStyle>
+                <Style/>
+            </TreeView.FocusVisualStyle>
+            <TreeViewItem Foreground="White"/>
         </TreeView>
         <Calendar Margin="243,0,5,5" 
                   HorizontalContentAlignment="Right" 
                   VerticalContentAlignment="Center" 
                   HorizontalAlignment="Right" 
-                  VerticalAlignment="Bottom"/>
+                  VerticalAlignment="Bottom"
+                  BorderBrush="Black"/>
         <ListView Grid.Column="1"
                   x:Name="BeforeTaskListView"
                   SelectionChanged="BeforeTaskListView_SelectionChanged"
-                  ItemsSource="{Binding Path=Items}"/>
+                  ItemsSource="{Binding Path=Items}"
+                  Background="#2F2F2F"
+                  Foreground="White" BorderBrush="Black"/>
         <ListView Grid.Column="1"
                   Grid.Row="1"
                   x:Name="AfterTaskListView"
                   SelectionChanged="AfterTaskListView_SelectionChanged"
-                  ItemsSource="{Binding Path=Items}"/>
+                  ItemsSource="{Binding Path=Items}"
+                  Background="#2F2F2F"
+                  Foreground="White" BorderBrush="Black"/>
         <Grid x:Name="TaskPanel"
                     Grid.Column="2"
                     Grid.RowSpan="2">
@@ -47,18 +58,27 @@
             </Grid.RowDefinitions>
             <DatePicker x:Name="TaskDateTimePicker"
                         Grid.Row="0"
-                        SelectedDateChanged="TaskDateTimePicker_SelectedDateChanged"/>
+                        SelectedDateChanged="TaskDateTimePicker_SelectedDateChanged" 
+                        SelectedDateFormat="Long"
+                        Background="#FF2F2F2F"
+                        BorderBrush="Black"/>
             <TextBox x:Name="TaskTitleTextBox"
                      Grid.Row="1"
-                     TextChanged="TaskTitleTextBox_TextChanged"/>
+                     TextChanged="TaskTitleTextBox_TextChanged"
+                     Background="#2F2F2F"
+                     Foreground="White" BorderBrush="Black"/>
             <TextBox x:Name="TaskDescryptTextBox"
                      Grid.Row="2"
-                     TextChanged="TaskDescryptTextBox_TextChanged"/>
+                     TextChanged="TaskDescryptTextBox_TextChanged"
+                     Background="#2F2F2F"
+                     Foreground="White" BorderBrush="Black"/>
             <CheckBox x:Name="TaskDDayCheckBox"
                       Grid.Row="3"
                       Content="Is D-Day Task"
                       Checked="TaskDDayCheckBox_Checked"
-                      Unchecked="TaskDDayCheckBox_Checked"/>
+                      Unchecked="TaskDDayCheckBox_Checked"
+                      Foreground="White" 
+                      BorderBrush="Black"/>
             <Grid Grid.Row="4">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
@@ -67,15 +87,21 @@
                 </Grid.ColumnDefinitions>
                 <Button x:Name="TaskAddButton"
                         Content="Add"
-                        Click="TaskAddButton_Click"/>
+                        Click="TaskAddButton_Click"
+                        Background="#2F2F2F"
+                        Foreground="White" BorderBrush="Black"/>
                 <Button x:Name="TaskSaveButton"
                         Content="Save"
                         Click="TaskSaveButton_Click"
-                        Grid.Column="1"/>
+                        Grid.Column="1"
+                        Background="#2F2F2F"
+                        Foreground="White" BorderBrush="Black"/>
                 <Button x:Name="TaskCancelButton"
                         Content="Cancel"
                         Click="TaskCancelButton_Click"
-                        Grid.Column="2"/>
+                        Grid.Column="2"
+                        Background="#2F2F2F"
+                        Foreground="White" BorderBrush="Black"/>
             </Grid>
         </Grid>
     </Grid>

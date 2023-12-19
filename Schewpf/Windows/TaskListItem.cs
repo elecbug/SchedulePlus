@@ -37,12 +37,14 @@ namespace Schewpf.Windows
             {
                 Content = task.DateTime.ToString("yy.MM.dd.") + " " + task.Title,
                 VerticalAlignment = VerticalAlignment.Center,
+                Foreground = new SolidColorBrush(Colors.White),
             };
 
             RemoveButton = new Button() 
             {
-                Content = "X",
-                Background = new SolidColorBrush(Colors.White),
+                Content = "🗑",
+                Foreground = new SolidColorBrush(Colors.LightGray),
+                Background = new SolidColorBrush(Colors.DarkRed),
             };
             RemoveButton.Click += removed;
             

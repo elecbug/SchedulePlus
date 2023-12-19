@@ -217,9 +217,13 @@ namespace Schewpf
                         dayStr = "-Day";
                     }
 
-                    TaskTreeView.Items
-                        .Add(todo.DateTime.ToString("yy-MM-dd") + " " + todo.Title
-                            + (todo.IsDDayTask == true ? " (D" + dayStr + ")" : ""));
+                    TaskTreeView.Items.Add(new Label()
+                    {
+                        Content = todo.DateTime.ToString("yy-MM-dd") + " " + todo.Title
+                            + (todo.IsDDayTask == true ? " (D" + dayStr + ")" : ""),
+                        Foreground = new SolidColorBrush(Colors.White),
+                        FocusVisualStyle = new Style(typeof(ListView)),
+                    });
                 }
             }
         }

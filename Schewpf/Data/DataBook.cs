@@ -62,6 +62,8 @@ namespace Schewpf.Data
         /// <param name="path"> 데이터를 저장할 경로 </param>
         public void Save(string path)
         {
+            Tasks.Sort((x, y) => y.DateTime.CompareTo(x.DateTime));
+
             if (File.Exists(path) == false)
             {
                 File.Create(path).Close();
