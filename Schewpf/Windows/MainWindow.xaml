@@ -1,4 +1,4 @@
-﻿<Window x:Class="Schewpf.MainWindow"
+﻿<Window x:Class="Schewpf.Windows.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -6,105 +6,24 @@
         xmlns:local="clr-namespace:Schewpf"
         mc:Ignorable="d"
         Title="Schewpf" Height="600" Width="1100"
-        Loaded="MainWindowLoaded">
-    <Grid Background="#2F2F2F">
-        <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition Width="250"/>
-            <ColumnDefinition Width="0.75*"/>
-        </Grid.ColumnDefinitions>
-        <TreeView x:Name="TaskTreeView"
-                  Grid.Row="0"
-                  Grid.Column="0"
-                  Background="#2F2F2F"
-                  Foreground="White" BorderBrush="Black">
-            <TreeView.FocusVisualStyle>
-                <Style/>
-            </TreeView.FocusVisualStyle>
-            <TreeViewItem Foreground="White"/>
-        </TreeView>
-        <Calendar Margin="243,0,5,5" 
-                  HorizontalContentAlignment="Right" 
-                  VerticalContentAlignment="Center" 
-                  HorizontalAlignment="Right" 
-                  VerticalAlignment="Bottom"
-                  BorderBrush="Black"/>
-        <ListView Grid.Column="1"
-                  x:Name="BeforeTaskListView"
-                  SelectionChanged="BeforeTaskListView_SelectionChanged"
-                  ItemsSource="{Binding Path=Items}"
-                  Background="#2F2F2F"
-                  Foreground="White" BorderBrush="Black"/>
-        <ListView Grid.Column="1"
-                  Grid.Row="1"
-                  x:Name="AfterTaskListView"
-                  SelectionChanged="AfterTaskListView_SelectionChanged"
-                  ItemsSource="{Binding Path=Items}"
-                  Background="#2F2F2F"
-                  Foreground="White" BorderBrush="Black"/>
-        <Grid x:Name="TaskPanel"
-                    Grid.Column="2"
-                    Grid.RowSpan="2">
-            <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition Height="16*"/>
-                <RowDefinition/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
-            <DatePicker x:Name="TaskDateTimePicker"
-                        Grid.Row="0"
-                        SelectedDateChanged="TaskDateTimePicker_SelectedDateChanged" 
-                        SelectedDateFormat="Long"
-                        Background="#FF2F2F2F"
-                        BorderBrush="Black"/>
-            <TextBox x:Name="TaskTitleTextBox"
-                     Grid.Row="1"
-                     TextChanged="TaskTitleTextBox_TextChanged"
-                     Background="#2F2F2F"
-                     Foreground="White" BorderBrush="Black"/>
-            <TextBox x:Name="TaskDescryptTextBox"
-                     Grid.Row="2"
-                     TextChanged="TaskDescryptTextBox_TextChanged"
-                     Background="#2F2F2F"
-                     Foreground="White" BorderBrush="Black"
-                     TextWrapping="Wrap" AcceptsReturn="True"
-                     VerticalScrollBarVisibility="Visible"/>
-            <CheckBox x:Name="TaskDDayCheckBox"
-                      Grid.Row="3"
-                      Content="Is D-Day Task"
-                      Checked="TaskDDayCheckBox_Checked"
-                      Unchecked="TaskDDayCheckBox_Checked"
-                      Foreground="White" 
-                      BorderBrush="Black"/>
-            <Grid Grid.Row="4">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                <Button x:Name="TaskAddButton"
-                        Content="Add"
-                        Click="TaskAddButton_Click"
-                        Background="#2F2F2F"
-                        Foreground="White" BorderBrush="Black"/>
-                <Button x:Name="TaskSaveButton"
-                        Content="Save"
-                        Click="TaskSaveButton_Click"
-                        Grid.Column="1"
-                        Background="#2F2F2F"
-                        Foreground="White" BorderBrush="Black"/>
-                <Button x:Name="TaskCancelButton"
-                        Content="Cancel"
-                        Click="TaskCancelButton_Click"
-                        Grid.Column="2"
-                        Background="#2F2F2F"
-                        Foreground="White" BorderBrush="Black"/>
-            </Grid>
-        </Grid>
+        Loaded="MainWindow_Loaded"
+        Closing="Window_Closing">
+    <Grid>
+        <TabControl>
+            <TabItem 
+                Header="Task">
+                <Grid>
+                    <Frame 
+                        x:Name="TaskFrame"/>
+                </Grid>
+            </TabItem>
+            <TabItem 
+                Header="Memo">
+                <Grid>
+                    <Frame 
+                        x:Name="MemoFrame"/>
+                </Grid>
+            </TabItem>
+        </TabControl>
     </Grid>
 </Window>

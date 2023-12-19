@@ -1,13 +1,8 @@
-﻿using Microsoft.Win32;
-using Schewpf.Data;
-using Schewpf.Settings;
-using Schewpf.Windows;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -18,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Schewpf.Windows
+namespace Jourwpf.Windows
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -30,18 +25,9 @@ namespace Schewpf.Windows
             InitializeComponent();
         }
 
-        
-        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        private void TabItem_Loaded(object sender, RoutedEventArgs e)
         {
-            TaskFrame.Content = new TaskPage();
-        }
-
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            if (MessageBox.Show("Close Window?", "", MessageBoxButton.YesNo) == MessageBoxResult.No)
-            {
-                e.Cancel = true;
-            }
+            HomePageTabItem.Content = new HomePage();
         }
     }
 }
