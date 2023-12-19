@@ -9,9 +9,18 @@
       Title="MemoPage">
 
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="0.25*"/>
+        </Grid.ColumnDefinitions>
         <Canvas
             x:Name="MemoCanvas"
-            Background="White"/>
-
+            Background="White"
+            MouseDown="MemoCanvas_MouseDown"/>
+        <TextBox
+            x:Name="MemoTextBox"
+            Grid.Column="1"
+            TextWrapping="Wrap" AcceptsReturn="True"
+            VerticalScrollBarVisibility="Visible"/>
     </Grid>
 </Page>
