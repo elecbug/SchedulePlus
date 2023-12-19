@@ -23,7 +23,7 @@ namespace Schewpf.Windows
     /// </summary>
     public partial class TaskPage : Page
     {
-        private DataBook DataBook = new DataBook();
+        public DataBook DataBook = new DataBook();
         private long SelectedTaskID = Task.NO_TASK;
         private bool IsSaved = true;
 
@@ -84,38 +84,6 @@ namespace Schewpf.Windows
             RefreshTaskPanel();
             //RefreshMemoFrame();
         }
-
-        ///// <summary>
-        ///// 메모 프레임만을 재설정
-        ///// </summary>
-        //private void RefreshMemoFrame()
-        //{
-        //    MemoCanvas.Children.Clear();
-
-        //    foreach (var item in DataBook.Memos)
-        //    {
-        //        AddMemoLabel(item);
-        //    }
-        //}
-
-        ///// <summary>
-        ///// Memo 객체를 기반으로 메모를 UI에 그림
-        ///// </summary>
-        ///// <param name="item"> 메모 </param>
-        //private void AddMemoLabel(Memo item)
-        //{
-        //    Label label = new Label()
-        //    {
-        //        Visibility = Visibility.Visible,
-        //        Content = item.Text,
-        //        Background = new SolidColorBrush(Colors.LightGoldenrodYellow),
-        //    };
-
-        //    MemoCanvas.Children.Add(label);
-
-        //    Canvas.SetLeft(label, (double)item.X);
-        //    Canvas.SetTop(label, (double)item.Y);
-        //}
 
         /// <summary>
         /// 할 일을 표시하는 패널의 하위 요소만을 재설정

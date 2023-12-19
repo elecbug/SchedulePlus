@@ -33,7 +33,9 @@ namespace Schewpf.Windows
         
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            TaskFrame.Content = new TaskPage();
+            TaskPage mainPage = new TaskPage();
+            TaskFrame.Content = mainPage;
+            MemoFrame.Content = new MemoPage(mainPage.DataBook);
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
