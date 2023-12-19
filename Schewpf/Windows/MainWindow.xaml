@@ -71,7 +71,9 @@
                      Grid.Row="2"
                      TextChanged="TaskDescryptTextBox_TextChanged"
                      Background="#2F2F2F"
-                     Foreground="White" BorderBrush="Black"/>
+                     Foreground="White" BorderBrush="Black"
+                     TextWrapping="Wrap" AcceptsReturn="True"
+                     VerticalScrollBarVisibility="Visible"/>
             <CheckBox x:Name="TaskDDayCheckBox"
                       Grid.Row="3"
                       Content="Is D-Day Task"
