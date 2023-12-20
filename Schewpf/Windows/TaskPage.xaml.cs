@@ -44,11 +44,6 @@ namespace Schewpf.Windows
         /// <param name="showDialog"> 반드시 다이얼로그를 띄움 </param>
         private void Opening(bool showDialog = false)
         {
-            if (File.Exists(User.Default.FilePath) == false)
-            {
-                DataBook.Save(User.Default.FilePath);
-            }
-
             if (File.Exists(User.Default.FilePath) == false || showDialog == true)
             {
                 OpenFileDialog dialog = new OpenFileDialog()
